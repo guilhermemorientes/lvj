@@ -173,82 +173,50 @@ function initGallerySlider() {
 }
 
 // ===== SEÇÃO PLANTAS (ACORDEÃO INDEPENDENTE + TOUR VIRTUAL ATIVO POR CLIQUE + EXPANSÃO CENTRALIZADA) ===== //
-function initPlantasSection() {
-  const cards = document.querySelectorAll(".plantas-card");
-  const sliderButtons = document.querySelectorAll(".slider-buttons button");
+card.addEventListener("click", function () {
+  const isActive = detailSection.classList.contains("active");
+  const container = card.closest(".plantas-cards");
+  const allCards = container.querySelectorAll(".plantas-card");
+  const allDetails = container.querySelectorAll(".plantas-details");
 
-  cards.forEach((card) => {
-    // Cria e insere o botão de toggle (+ / -)
-    const toggleBtn = document.createElement("div");
-    toggleBtn.classList.add("card-toggle");
+  if (!isActive) {
+    // Fecha todos os outros
+    allDetails.forEach((detail) => {
+      detail.classList.remove("active");
+      detail.style.display = "none";
+    });
+    allCards.forEach((c) => {
+      c.classList.add("escurecido");
+      const toggle = c.querySelector(".card-toggle");
+      if (toggle) toggle.textContent = "+";
+      c.style.maxWidth = "";
+    });
+
+    // Abre o atual
+    detailSection.classList.add("active");
+    detailSection.style.display = "block";
+    card.classList.remove("escurecido");
+    toggleBtn.textContent = "-";
+    container.classList.add("expandindo");
+    card.style.maxWidth = "640px";
+
+    // 🔽 Scroll suave até a imagem de corte
+    const corteImg = detailSection.querySelector(".plantas-cut");
+    if (corteImg) {
+      setTimeout(() => {
+        corteImg.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 200);
+    }
+  } else {
+    // Fecha o atual
+    detailSection.classList.remove("active");
+    detailSection.style.display = "none";
     toggleBtn.textContent = "+";
-    card.appendChild(toggleBtn);
-
-    const projectId = card.dataset.project;
-    const detailSection = document.getElementById(`details-${projectId}`);
-
-    card.addEventListener("click", function () {
-      const isActive = detailSection.classList.contains("active");
-      const container = card.closest(".plantas-cards");
-      const allCards = container.querySelectorAll(".plantas-card");
-      const allDetails = container.querySelectorAll(".plantas-details");
-
-      if (!isActive) {
-        // Fecha todos os outros
-        allDetails.forEach((detail) => {
-          detail.classList.remove("active");
-          detail.style.display = "none";
-        });
-        allCards.forEach((c) => {
-          c.classList.remove("pulsante");
-          c.classList.add("escurecido");
-          const toggle = c.querySelector(".card-toggle");
-          if (toggle) toggle.textContent = "+";
-          c.style.maxWidth = "";
-        });
-
-        // Abre o atual
-        detailSection.classList.add("active");
-        detailSection.style.display = "block";
-        card.classList.remove("escurecido");
-        toggleBtn.textContent = "-";
-        container.classList.add("expandindo");
-        card.style.maxWidth = "640px";
-      } else {
-        // Fecha o atual
-        detailSection.classList.remove("active");
-        detailSection.style.display = "none";
-        toggleBtn.textContent = "+";
-        card.classList.add("escurecido");
-        card.style.maxWidth = "";
-        container.classList.remove("expandindo");
-      }
-    });
-  });
-
-  sliderButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const projectId = this.dataset.project;
-      const imageSrc = this.dataset.image;
-
-      const projectButtons = document.querySelectorAll(`[data-project="${projectId}"]`);
-      projectButtons.forEach((btn) => {
-        if (btn.tagName === "BUTTON") {
-          btn.classList.remove("ativo");
-        }
-      });
-      this.classList.add("ativo");
-
-      const plantaImg = document.getElementById(`planta-img-${projectId}`);
-      if (plantaImg) {
-        plantaImg.style.opacity = "0";
-        setTimeout(() => {
-          plantaImg.src = imageSrc;
-          plantaImg.style.opacity = "1";
-        }, 300);
-      }
-    });
-  });
+    card.classList.add("escurecido");
+    card.style.maxWidth = "";
+    container.classList.remove("expandindo");
+  }
+});
 
   // Ativação dos tours ao clicar no botão
   const tourContainers = document.querySelectorAll(".tour-container");
@@ -271,7 +239,6 @@ function initPlantasSection() {
       });
     }
   });
-}
 
 // ===== FORMULÁRIOS ===== //
 function initForms() {
