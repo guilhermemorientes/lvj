@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Las Villas Serra do Japi - O Cenário Perfeito Para Sua Vida</title>
   <meta name="description" content="Condomínio exclusivo de casas em Medeiros, Jundiaí. 60 casas de 145 a 178m² com 3 a 4 dormitórios. Entrega em outubro de 2027.">
   <meta name="keywords" content="Las Villas Serra do Japi, casas Jundiaí, bairro Medeiros, casas com rooftop, condomínio fechado, Serra do Japi, casas alto padrão, Grupo Lar, lazer completo, lançamento imobiliário">
@@ -62,7 +62,7 @@
             </ul>
 
             <!-- Mobile Menu Toggle -->
-            <button class="menu-toggle" id="menu-toggle">
+            <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Menu">
                 <i data-lucide="menu"></i>
             </button>
 
@@ -281,92 +281,97 @@
 
     <div class="galeria-slider fade-in-up">
       <div class="slider-container">
-        <div class="slider-viewport">
-          <div class="slide-container" id="slide-container">
-            <div class="slide-card active" data-caption="Piscina">
-              <div class="image-container">
-                <img src="img/galeria/piscina.webp" alt="Piscina" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Piscina</div>
-            </div>
 
-            <div class="slide-card" data-caption="Spa">
-              <div class="image-container">
-                <img src="img/galeria/spa.webp" alt="Spa" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Spa</div>
-            </div>
+        <!-- Botões -->
+        <button type="button" class="slider-btn slider-prev" id="prev-btn" aria-label="Slide anterior">
+          <i data-lucide="chevron-left"></i>
+        </button>
 
-            <div class="slide-card" data-caption="Beach Tennis">
-              <div class="image-container">
-                <img src="img/galeria/beach-tennis.webp" alt="Beach Tennis" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Beach Tennis</div>
-            </div>
+        <div class="slides-wrapper" id="slide-container">
 
-            <div class="slide-card" data-caption="Playground">
-              <div class="image-container">
-                <img src="img/galeria/playground.webp" alt="Playground" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Playground</div>
+          <div class="slide-card active" data-caption="Piscina">
+            <div class="image-container">
+              <img src="img/galeria/piscina.webp" alt="Piscina" class="slide-image fade-image" loading="lazy" />
             </div>
-
-            <div class="slide-card" data-caption="Churrasqueira">
-              <div class="image-container">
-                <img src="img/galeria/churrasqueira.webp" alt="Churrasqueira" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Churrasqueira</div>
-            </div>
-
-            <div class="slide-card" data-caption="Jardim">
-              <div class="image-container">
-                <img src="img/galeria/jardim.webp" alt="Jardim" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Jardim</div>
-            </div>
-
-            <div class="slide-card" data-caption="Pet Place">
-              <div class="image-container">
-                <img src="img/galeria/pet-place.webp" alt="Pet Place" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Pet Place</div>
-            </div>
-
-            <div class="slide-card" data-caption="Salão de Festas">
-              <div class="image-container">
-                <img src="img/galeria/salao-de-festas.webp" alt="Salão de Festas" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Salão de Festas</div>
-            </div>
-
-            <div class="slide-card" data-caption="Salão Gourmet">
-              <div class="image-container">
-                <img src="img/galeria/salao-gourmet.webp" alt="Salão Gourmet" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Salão Gourmet</div>
-            </div>
-
-            <div class="slide-card" data-caption="Pilates">
-              <div class="image-container">
-                <img src="img/galeria/pilates.webp" alt="Pilates" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Pilates</div>
-            </div>
-
-            <div class="slide-card" data-caption="Coworking">
-              <div class="image-container">
-                <img src="img/galeria/coworking.webp" alt="Coworking" class="slide-image fade-image" loading="lazy" />
-              </div>
-              <div class="gallery-caption">Coworking</div>
-            </div>
+            <div class="gallery-caption">Piscina</div>
           </div>
+
+          <div class="slide-card" data-caption="Spa">
+            <div class="image-container">
+              <img src="img/galeria/spa.webp" alt="Spa" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Spa</div>
+          </div>
+
+          <div class="slide-card" data-caption="Beach Tennis">
+            <div class="image-container">
+              <img src="img/galeria/beach-tennis.webp" alt="Beach Tennis" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Beach Tennis</div>
+          </div>
+
+          <div class="slide-card" data-caption="Playground">
+            <div class="image-container">
+              <img src="img/galeria/playground.webp" alt="Playground" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Playground</div>
+          </div>
+
+          <div class="slide-card" data-caption="Churrasqueira">
+            <div class="image-container">
+              <img src="img/galeria/churrasqueira.webp" alt="Churrasqueira" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Churrasqueira</div>
+          </div>
+
+          <div class="slide-card" data-caption="Jardim">
+            <div class="image-container">
+              <img src="img/galeria/jardim.webp" alt="Jardim" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Jardim</div>
+          </div>
+
+          <div class="slide-card" data-caption="Pet Place">
+            <div class="image-container">
+              <img src="img/galeria/pet-place.webp" alt="Pet Place" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Pet Place</div>
+          </div>
+
+          <div class="slide-card" data-caption="Salão de Festas">
+            <div class="image-container">
+              <img src="img/galeria/salao-de-festas.webp" alt="Salão de Festas" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Salão de Festas</div>
+          </div>
+
+          <div class="slide-card" data-caption="Salão Gourmet">
+            <div class="image-container">
+              <img src="img/galeria/salao-gourmet.webp" alt="Salão Gourmet" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Salão Gourmet</div>
+          </div>
+
+          <div class="slide-card" data-caption="Pilates">
+            <div class="image-container">
+              <img src="img/galeria/pilates.webp" alt="Pilates" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Pilates</div>
+          </div>
+
+          <div class="slide-card" data-caption="Coworking">
+            <div class="image-container">
+              <img src="img/galeria/coworking.webp" alt="Coworking" class="slide-image fade-image" loading="lazy" />
+            </div>
+            <div class="gallery-caption">Coworking</div>
+          </div>
+
         </div>
 
-        <!-- Botões Isolados para evitar foco -->
-        <div class="slider-buttons-wrapper" tabindex="-1">
-          <button type="button" class="slider-btn-custom prev" id="prev-btn" aria-label="Slide anterior">‹</button>
-          <button type="button" class="slider-btn-custom next" id="next-btn" aria-label="Próximo slide">›</button>
-        </div>
+        <!-- Botões -->
+        <button type="button" class="slider-btn slider-next" id="next-btn" aria-label="Próximo slide">
+          <i data-lucide="chevron-right"></i>
+        </button>
 
       </div>
     </div>
@@ -512,7 +517,6 @@
     </div>
   </div>
 </footer>
-
 
     <!-- Scripts -->
     <script src="script.js"></script>
