@@ -153,9 +153,9 @@ function initGallerySlider() {
     nextBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      nextBtn.blur(); // impede foco que causaria scroll
+      nextBtn.blur();
       nextSlide();
-      window.scrollTo({ top: window.scrollY, left: 0, behavior: "instant" }); // trava scroll automático
+      // window.scrollTo({ top: window.scrollY, left: 0, behavior: "instant" }); // ❌ REMOVIDO: causava bug
       resetInterval();
     });
 
@@ -174,83 +174,88 @@ function initGallerySlider() {
 
 // ===== SEÇÃO PLANTAS (ACORDEÃO INDEPENDENTE + TOUR VIRTUAL ATIVO POR CLIQUE + EXPANSÃO CENTRALIZADA) ===== //
 function initPlantasSection() {
-  const cards = document.querySelectorAll(".plantas-card")
-  const sliderButtons = document.querySelectorAll(".slider-buttons button")
+  const cards = document.querySelectorAll(".plantas-card");
+  const sliderButtons = document.querySelectorAll(".slider-buttons button");
 
   cards.forEach((card) => {
     // Cria e insere o botão de toggle (+ / -)
-    const toggleBtn = document.createElement("div")
-    toggleBtn.classList.add("card-toggle")
-    toggleBtn.textContent = "+"
-    card.appendChild(toggleBtn)
+    const toggleBtn = document.createElement("div");
+    toggleBtn.classList.add("card-toggle");
+    toggleBtn.textContent = "+";
+    card.appendChild(toggleBtn);
 
-    const projectId = card.dataset.project
-    const detailSection = document.getElementById(`details-${projectId}`)
+    const projectId = card.dataset.project;
+    const detailSection = document.getElementById(`details-${projectId}`);
 
     card.addEventListener("click", function () {
-      const isActive = detailSection.classList.contains("active")
-      const container = card.closest(".plantas-cards")
-      const allCards = container.querySelectorAll(".plantas-card")
-      const allDetails = container.querySelectorAll(".plantas-details")
+      const isActive = detailSection.classList.contains("active");
+      const container = card.closest(".plantas-cards");
+      const allCards = container.querySelectorAll(".plantas-card");
+      const allDetails = container.querySelectorAll(".plantas-details");
 
-      // Fecha qualquer outro aberto antes
-      allDetails.forEach((detail) => {
-        detail.classList.remove("active")
-        detail.style.display = "none"
-      })
-      allCards.forEach((c) => {
-        c.classList.remove("pulsante")
-        c.classList.add("escurecido")
-        c.querySelector(".card-toggle").textContent = "+"
-        c.style.maxWidth = ""
-      })
+      if (!isActive) {
+        // Fecha todos os outros
+        allDetails.forEach((detail) => {
+          detail.classList.remove("active");
+          detail.style.display = "none";
+        });
+        allCards.forEach((c) => {
+          c.classList.remove("pulsante");
+          c.classList.add("escurecido");
+          const toggle = c.querySelector(".card-toggle");
+          if (toggle) toggle.textContent = "+";
+          c.style.maxWidth = "";
+        });
 
-      if (isActive) {
-        detailSection.classList.remove("active")
-        detailSection.style.display = "none"
-        container.classList.remove("expandindo")
+        // Abre o atual
+        detailSection.classList.add("active");
+        detailSection.style.display = "block";
+        card.classList.remove("escurecido");
+        toggleBtn.textContent = "-";
+        container.classList.add("expandindo");
+        card.style.maxWidth = "640px";
       } else {
-        detailSection.classList.add("active")
-        detailSection.style.display = "block"
-        card.classList.remove("escurecido")
-        card.classList.add("pulsante")
-        toggleBtn.textContent = "-"
-        container.classList.add("expandindo")
-        card.style.maxWidth = "640px"
+        // Fecha o atual
+        detailSection.classList.remove("active");
+        detailSection.style.display = "none";
+        toggleBtn.textContent = "+";
+        card.classList.add("escurecido");
+        card.style.maxWidth = "";
+        container.classList.remove("expandindo");
       }
-    })
-  })
+    });
+  });
 
   sliderButtons.forEach((button) => {
     button.addEventListener("click", function () {
-      const projectId = this.dataset.project
-      const imageSrc = this.dataset.image
+      const projectId = this.dataset.project;
+      const imageSrc = this.dataset.image;
 
-      const projectButtons = document.querySelectorAll(`[data-project="${projectId}"]`)
+      const projectButtons = document.querySelectorAll(`[data-project="${projectId}"]`);
       projectButtons.forEach((btn) => {
         if (btn.tagName === "BUTTON") {
-          btn.classList.remove("ativo")
+          btn.classList.remove("ativo");
         }
-      })
-      this.classList.add("ativo")
+      });
+      this.classList.add("ativo");
 
-      const plantaImg = document.getElementById(`planta-img-${projectId}`)
+      const plantaImg = document.getElementById(`planta-img-${projectId}`);
       if (plantaImg) {
-        plantaImg.style.opacity = "0"
+        plantaImg.style.opacity = "0";
         setTimeout(() => {
-          plantaImg.src = imageSrc
-          plantaImg.style.opacity = "1"
-        }, 300)
+          plantaImg.src = imageSrc;
+          plantaImg.style.opacity = "1";
+        }, 300);
       }
-    })
-  })
+    });
+  });
 
   // Ativação dos tours ao clicar no botão
-  const tourContainers = document.querySelectorAll(".tour-container")
+  const tourContainers = document.querySelectorAll(".tour-container");
 
-  tourContainers.forEach(container => {
-    const tourUrl = container.dataset.tour
-    const button = container.querySelector(".tour-button")
+  tourContainers.forEach((container) => {
+    const tourUrl = container.dataset.tour;
+    const button = container.querySelector(".tour-button");
 
     if (button) {
       button.addEventListener("click", () => {
@@ -262,10 +267,10 @@ function initPlantasSection() {
             loading="lazy"
             style="width:100%; height:100%; border:0;">
           </iframe>
-        `
-      })
+        `;
+      });
     }
-  })
+  });
 }
 
 // ===== FORMULÁRIOS ===== //
