@@ -398,6 +398,7 @@ p {
 }
 
 .mobile-menu.active {
+  display: flex; /* ✅ ESSA LINHA É A CORREÇÃO */
   opacity: 1;
   transform: translateY(0);
 }
