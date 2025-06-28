@@ -210,11 +210,12 @@ function initPlantasSection() {
         card.style.maxWidth = "640px";
 
         const corteImg = detailSection.querySelector(".plantas-cut");
-        if (corteImg) {
-          setTimeout(() => {
-            corteImg.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 200);
-        }
+if (corteImg) {
+  setTimeout(() => {
+    corteImg.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 200);
+}
+
       } else {
         detailSection.classList.remove("active");
         detailSection.style.display = "none";
