@@ -37,21 +37,17 @@ function initNavigation() {
     }
   })
 
-menuToggle.addEventListener("click", () => {
-  // Evita abrir menu se não for mobile
-  if (window.innerWidth >= 768) return;
-
-  const isOpen = mobileMenu.classList.contains("active")
-  if (isOpen) {
-    mobileMenu.classList.remove("active")
-    menuToggle.innerHTML = '<i data-lucide="menu"></i>'
-  } else {
-    mobileMenu.classList.add("active")
-    menuToggle.innerHTML = '<i data-lucide="x"></i>'
-  }
-
-  window.lucide.createIcons()
-})
+  menuToggle.addEventListener("click", () => {
+    const isOpen = mobileMenu.classList.contains("active")
+    if (isOpen) {
+      mobileMenu.classList.remove("active")
+      menuToggle.innerHTML = '<i data-lucide="menu"></i>'
+    } else {
+      mobileMenu.classList.add("active")
+      menuToggle.innerHTML = '<i data-lucide="x"></i>'
+    }
+    window.lucide.createIcons()
+  })
 
   navLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
@@ -98,14 +94,12 @@ menuToggle.addEventListener("click", () => {
 // ===== ANIMAÇÕES DE SCROLL ===== //
 function initScrollAnimations() {
   function checkFadeInElements() {
-    const animatedElements = document.querySelectorAll(".fade-in-up:not(.visible):not(#mobile-menu)")
+    const animatedElements = document.querySelectorAll(".fade-in-up:not(.visible)")
     const windowBottom = window.scrollY + window.innerHeight
-
-    const sensibilidade = window.innerWidth < 768 ? 30 : 100
 
     animatedElements.forEach((el) => {
       const elTop = el.getBoundingClientRect().top + window.scrollY
-      if (windowBottom > elTop + sensibilidade) {
+      if (windowBottom > elTop + 100) {
         el.classList.add("visible")
       }
     })
