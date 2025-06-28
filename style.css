@@ -78,18 +78,51 @@ img {
   display: block;
 }
 
+/* ===== OTIMIZAÇÕES MOBILE - CORREÇÃO DE BUGS ===== */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+
+  input,
+  textarea,
+  button {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    font-size: 16px !important; /* Previne zoom no iOS */
+  }
+
+  button,
+  .slider-btn,
+  .nav-link,
+  .plantas-card {
+    touch-action: manipulation !important;
+    -webkit-touch-callout: none !important;
+  }
+
+  /* Previne scroll involuntário */
+  body {
+    position: relative;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* ===== BLOQUEIA FOCOS VISUAIS ===== */
 *:focus {
   outline: none !important;
-}
-
-/* === BLOQUEIA TODA SELEÇÃO E DESTACA INTERAÇÃO SUAVE === */
-* {
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -webkit-tap-highlight-color: transparent !important;
-  outline: none !important;
-  box-shadow: none !important;
 }
 
 /* ===== LAYOUT GLOBAL ===== */
@@ -369,6 +402,8 @@ p {
   color: var(--white);
   z-index: 1001;
   transition: var(--transition);
+  padding: 8px;
+  touch-action: manipulation;
 }
 
 .menu-toggle:hover {
@@ -409,6 +444,7 @@ p {
   padding: var(--space-sm) 0;
   cursor: pointer;
   transition: var(--transition);
+  touch-action: manipulation;
 }
 
 .mobile-menu a:hover,
@@ -480,7 +516,7 @@ p {
   display: none;
 }
 
-/* ===== FORMULÁRIOS 3D - VERSÃO MELHORADA ===== */
+/* ===== FORMULÁRIOS 3D - VERSÃO REALISTA AJUSTADA ===== */
 
 .form-container {
   width: 100%;
@@ -488,23 +524,21 @@ p {
   margin: 0 auto;
   position: relative;
   padding: 3rem;
-  filter: drop-shadow(0 35px 70px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 20px 36px rgba(0, 0, 0, 0.14)); /* sombra externa mais natural */
 }
 
 .form-style {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+  background: linear-gradient(145deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
   padding: 2.5rem;
-  border-radius: 24px;
+  border-radius: 20px;
   box-shadow:
-    0 50px 100px -12px rgba(0, 0, 0, 0.45),
-    0 35px 70px -8px rgba(0, 0, 0, 0.35),
-    0 20px 40px -4px rgba(0, 0, 0, 0.3),
-    0 10px 20px -2px rgba(0, 0, 0, 0.25),
-    0 4px 8px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  backdrop-filter: blur(24px);
+    0 24px 48px -16px rgba(0, 0, 0, 0.18),
+    0 16px 32px -8px rgba(0, 0, 0, 0.12),
+    0 8px 16px -4px rgba(0, 0, 0, 0.08),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(226, 232, 240, 0.65);
+  backdrop-filter: blur(18px);
   position: relative;
   overflow: hidden;
   transform-style: preserve-3d;
@@ -526,8 +560,8 @@ p {
     var(--accent) 75%,
     transparent 100%
   );
-  opacity: 0.9;
-  border-radius: 24px 24px 0 0;
+  opacity: 0.85;
+  border-radius: 20px 20px 0 0;
 }
 
 .form-style::after {
@@ -537,22 +571,21 @@ p {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(230, 126, 34, 0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(230, 126, 34, 0.02) 0%, transparent 70%);
   pointer-events: none;
   animation: formGlow 8s ease-in-out infinite;
 }
 
 .form-style:hover {
-  transform: translateY(-10px);
+  transform: translateY(-6px);
   box-shadow:
-    0 70px 140px -12px rgba(0, 0, 0, 0.5),
-    0 45px 90px -8px rgba(0, 0, 0, 0.4),
-    0 25px 50px -4px rgba(0, 0, 0, 0.35),
-    0 15px 30px -2px rgba(0, 0, 0, 0.3),
-    0 8px 16px rgba(0, 0, 0, 0.25),
-    0 0 80px rgba(230, 126, 34, 0.3),
-    inset 0 2px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+    0 28px 56px -12px rgba(0, 0, 0, 0.25),
+    0 18px 36px -8px rgba(0, 0, 0, 0.18),
+    0 10px 20px -4px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    0 0 36px rgba(230, 126, 34, 0.15),
+    inset 0 2px 1px rgba(255, 255, 255, 0.88),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .form-title {
@@ -617,6 +650,7 @@ p {
     0 1px 4px rgba(0, 0, 0, 0.1);
   position: relative;
   color: var(--gray-700);
+  touch-action: manipulation;
 }
 
 .form-field::placeholder {
@@ -691,6 +725,7 @@ textarea.form-field:focus {
   overflow: hidden;
   transform-style: preserve-3d;
   margin-top: 0.5rem;
+  touch-action: manipulation;
 }
 
 .btn-enviar::before {
@@ -793,51 +828,6 @@ textarea.form-field:focus {
   box-shadow: 0 4px 12px rgba(231, 76, 60, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-/* Animação melhorada */
-@keyframes formGlow {
-  0%,
-  100% {
-    opacity: 0.04;
-  }
-  50% {
-    opacity: 0.08;
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-/* Responsividade melhorada */
-@media (max-width: 768px) {
-  .form-container {
-    padding: 0.5rem;
-  }
-
-  .form-style {
-    padding: 2rem 1.5rem;
-  }
-
-  .form-title {
-    font-size: 1.5rem;
-  }
-
-  .form-field {
-    padding: 1.2rem;
-  }
-
-  .btn-enviar {
-    padding: 1.2rem 1.5rem;
-    font-size: 1rem;
-  }
-}
-
 /* ===== SOBRE SECTION ===== */
 .sobre {
   padding: var(--space-2xl) 0;
@@ -851,7 +841,7 @@ textarea.form-field:focus {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-  align-items: stretch; /* ESSENCIAL para igualar as alturas */
+  align-items: stretch;
 }
 
 .sobre-image {
@@ -874,7 +864,7 @@ textarea.form-field:focus {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%; /* ESSENCIAL para igualar à altura da imagem */
+  height: 100%;
 }
 
 .info-grid {
@@ -1011,13 +1001,10 @@ textarea.form-field:focus {
 }
 
 .amenity-number:hover {
-  transform: translateY(-3px) scale(1.  1);
+  transform: translateY(-3px) scale(1.1);
   background: var(--accent-light);
   color: var(--white);
-  box-shadow:
-    0 8px 16px rgba(230, 126, 34, 0.4),
-    0 4px 8px rgba(230, 126, 34, 0.3),
-    0 0 20px rgba(230, 126, 34, 0.2);
+  box-shadow: 0 8px 16px rgba(230, 126, 34, 0.4), 0 4px 8px rgba(230, 126, 34, 0.3), 0 0 20px rgba(230, 126, 34, 0.2);
 }
 
 .amenity-number:hover::before {
@@ -1159,7 +1146,6 @@ textarea.form-field:focus {
   justify-content: center;
 }
 
-/* ✅ Espaço superior do título corrigido */
 .galeria-section .section-header {
   padding-top: var(--space-2xl);
 }
@@ -1185,16 +1171,7 @@ textarea.form-field:focus {
   justify-content: center;
 }
 
-.slider-viewport {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.slide-container {
+.slides-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
@@ -1209,9 +1186,8 @@ textarea.form-field:focus {
   position: absolute;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.2),
-              0 8px 20px -4px rgba(0, 0, 0, 0.12),
-              0 4px 12px -2px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.2), 0 8px 20px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px
+    rgba(0, 0, 0, 0.08);
   background: var(--white);
   transform-style: preserve-3d;
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -1266,8 +1242,7 @@ textarea.form-field:focus {
   text-align: center;
 }
 
-/* ===== NOVOS BOTÕES DO SLIDER ===== */
-.slider-btn-custom {
+.slider-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -1282,31 +1257,27 @@ textarea.form-field:focus {
   cursor: pointer;
   z-index: 10;
   transition: var(--transition);
-  box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.25),
-    0 4px 8px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2),
     inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  touch-action: manipulation;
 }
 
-.slider-btn-custom:hover {
+.slider-btn:hover {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
   transform: translateY(-50%) scale(1.08);
-  box-shadow:
-    0 15px 30px rgba(230, 126, 34, 0.4),
-    0 8px 16px rgba(230, 126, 34, 0.3),
-    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 30px rgba(230, 126, 34, 0.4), 0 8px 16px rgba(230, 126, 34, 0.3), inset 0 2px 0
+    rgba(255, 255, 255, 0.3);
 }
 
-.slider-btn-custom:active {
+.slider-btn:active {
   transform: translateY(-50%) scale(0.95);
 }
 
-.slider-btn-custom.prev {
+.slider-prev {
   left: 3%;
 }
 
-.slider-btn-custom.next {
+.slider-next {
   right: 3%;
 }
 
@@ -1334,6 +1305,7 @@ textarea.form-field:focus {
   transition: var(--transition-slow);
   box-shadow: var(--shadow-xl);
   transform-style: preserve-3d;
+  touch-action: manipulation;
 }
 
 .plantas-card:hover {
@@ -1470,7 +1442,6 @@ textarea.form-field:focus {
   gap: var(--space-sm);
 }
 
-/* Quando um card estiver aberto, a grid vira coluna */
 .plantas-cards.expandindo {
   display: flex;
   flex-direction: column;
@@ -1478,13 +1449,11 @@ textarea.form-field:focus {
   gap: var(--space-2xl);
 }
 
-/* Garante que os cards fiquem centralizados */
 .plantas-cards.expandindo .plantas-card {
   max-width: 640px;
   width: 100%;
 }
 
-/* Detalhes expandidos ocupam toda a largura */
 .plantas-cards.expandindo .plantas-details {
   max-width: 100%;
   width: 100%;
@@ -1504,6 +1473,7 @@ textarea.form-field:focus {
   box-shadow: var(--shadow-3d);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  touch-action: manipulation;
 }
 
 .slider-buttons button:hover {
@@ -1521,7 +1491,6 @@ textarea.form-field:focus {
   box-shadow: var(--shadow-3d-hover);
 }
 
-/* === TOUR VIRTUAL ATIVO POR CLIQUE === */
 .tour-container {
   position: relative;
   background: #000;
@@ -1576,15 +1545,13 @@ textarea.form-field:focus {
   max-width: 720px;
 }
 
-/* Aumenta somente o formulário da seção de contato em 30% */
 #contato .form-container {
-  max-width: 936px; /* 720px + 30% = 936px */
+  max-width: 936px;
 }
 
-/* Espaçador visual no lugar do título removido */
 .form-title-espacador {
   visibility: hidden;
-  height: 2.5rem; /* pode ajustar conforme necessário */
+  height: 2.5rem;
   margin-bottom: 1.5rem;
 }
 
@@ -1713,16 +1680,38 @@ textarea.form-field:focus {
     padding: 2rem;
   }
 
+  .form-container {
+    padding: 0.5rem;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+  }
+
+  .form-field {
+    padding: 1.2rem;
+  }
+
+  .btn-enviar {
+    padding: 1.2rem 1.5rem;
+    font-size: 1rem;
+  }
+
   /* Sobre */
   .sobre-content,
-  .implantacao-content,
-  .amenities-grid {
+  .implantacao-content {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
   }
 
   .implantacao-img {
     max-width: 100%;
+    width: 100%;
+    transform: translateX(0);
+  }
+
+  .implantacao-img:hover {
+    transform: translateX(0) scale(1.1);
   }
 
   /* Destaque */
@@ -1731,7 +1720,7 @@ textarea.form-field:focus {
     min-height: 80vh;
   }
 
-  /* ===== GALERIA (RESPONSIVO) ===== */
+  /* Galeria */
   .galeria-slider {
     height: 350px;
   }
@@ -1742,7 +1731,7 @@ textarea.form-field:focus {
   }
 
   .slide-card .image-container {
-    pointer-events: none; /* impede que o clique na imagem interfira no botão */
+    pointer-events: none;
   }
 
   .gallery-caption {
@@ -1750,41 +1739,22 @@ textarea.form-field:focus {
     padding: var(--space-lg) var(--space-md) var(--space-md);
   }
 
-  /* ===== BOTÕES DO SLIDER (CUSTOM) ===== */
-  .slider-btn-custom {
+  .slider-btn {
     width: 48px;
     height: 48px;
     font-size: 24px;
-    outline: none;
-    pointer-events: auto;
     z-index: 9999;
-    touch-action: manipulation; /* impede gesto de scroll vertical durante toque */
   }
 
-  .slider-btn-custom.prev {
+  .slider-prev {
     left: 2%;
   }
 
-  .slider-btn-custom.next {
+  .slider-next {
     right: 2%;
   }
 
-  /* ===== WRAPPER PARA ISOLAR FOCO NO MOBILE ===== */
-  .slider-buttons-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  .slider-buttons-wrapper button {
-    pointer-events: auto;
-  }
-
-  /* Plantas (Mobile) */
+  /* Plantas */
   .plantas-cards {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
@@ -1803,7 +1773,6 @@ textarea.form-field:focus {
     padding: 0 var(--space-md);
   }
 
-  /* Botões de troca de planta (pavimentos) */
   .slider-buttons {
     flex-direction: column;
     gap: var(--space-sm);
@@ -1817,25 +1786,6 @@ textarea.form-field:focus {
     text-align: center;
   }
 
-.card-toggle {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(255, 255, 255, 0.85);
-  color: #000;
-  font-size: 1.4rem;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  text-align: center;
-  line-height: 28px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  pointer-events: none;
-  z-index: 10;
-}
-
-  /* Footer */
   .footer-content {
     flex-direction: column;
     gap: var(--space-md);
@@ -1846,9 +1796,15 @@ textarea.form-field:focus {
     justify-content: center;
   }
 
-  /* ===== CORREÇÃO DE SCROLL NO MOBILE ===== */
-  html, body {
-    scroll-behavior: auto !important;
+  /* Otimizações específicas mobile */
+  * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  .fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -1865,7 +1821,6 @@ textarea.form-field:focus {
   border: 0;
 }
 
-/* Garantir responsividade global */
 html,
 body {
   overflow-x: hidden;
@@ -1876,7 +1831,6 @@ body {
   max-width: 100%;
 }
 
-/* Fade-in suave para imagens com carregamento */
 .fade-image {
   opacity: 0;
   transition: opacity 0.6s ease-in-out;
