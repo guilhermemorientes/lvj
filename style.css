@@ -398,7 +398,7 @@ p {
 }
 
 .mobile-menu.active {
-  display: flex; /* ✅ ESSA LINHA É A CORREÇÃO */
+  display: flex;
   opacity: 1;
   transform: translateY(0);
 }
@@ -1888,3 +1888,16 @@ body {
 .fade-image.loaded {
   opacity: 1;
 }
+
+/* === CORREÇÃO DEFINITIVA: só mostra menu mobile abaixo de 768px === */
+@media screen and (min-width: 768px) {
+  .mobile-menu {
+    display: none !important;
+  }
+
+  #menu-toggle {
+    display: none !important;
+  }
+}
+
+
