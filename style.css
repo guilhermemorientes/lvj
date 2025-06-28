@@ -1011,7 +1011,7 @@ textarea.form-field:focus {
 }
 
 .amenity-number:hover {
-  transform: translateY(-3px) scale(1.1);
+  transform: translateY(-3px) scale(1.  1);
   background: var(--accent-light);
   color: var(--white);
   box-shadow:
@@ -1346,17 +1346,9 @@ textarea.form-field:focus {
   object-fit: cover;
 }
 
-.plantas-card.pulsante {
-  animation: glowPulse 2s ease-in-out infinite;
-}
-
 .plantas-card.escurecido .plantas-overlay {
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(3px);
-}
-
-.plantas-card.pulsante .plantas-overlay {
-  background: rgba(0, 0, 0, 0.15);
 }
 
 .plantas-overlay {
