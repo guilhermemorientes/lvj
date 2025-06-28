@@ -23,7 +23,6 @@ function initNavigation() {
   const mobileMenu = document.getElementById("mobile-menu")
   const navLinks = document.querySelectorAll(".nav-link")
 
-  // Corrigido: evento dinâmico de scroll
   window.addEventListener("scroll", () => {
     if (window.scrollY > 10) {
       navbar.classList.add("scrolled")
@@ -119,7 +118,7 @@ function initGallerySlider() {
   const nextBtn = document.getElementById("next-btn");
 
   let currentSlide = 0;
-  let sliderInterval = setInterval(nextSlide, 5000); // ⏱️ intervalo inicial
+  let sliderInterval = setInterval(nextSlide, 5000);
 
   function showSlide(index) {
     slides.forEach((slide, i) => {
@@ -155,7 +154,6 @@ function initGallerySlider() {
       e.stopPropagation();
       nextBtn.blur();
       nextSlide();
-      // window.scrollTo({ top: window.scrollY, left: 0, behavior: "instant" }); // ❌ REMOVIDO: causava bug
       resetInterval();
     });
 
@@ -172,55 +170,87 @@ function initGallerySlider() {
   showSlide(currentSlide);
 }
 
-// ===== SEÇÃO PLANTAS (ACORDEÃO INDEPENDENTE + TOUR VIRTUAL ATIVO POR CLIQUE + EXPANSÃO CENTRALIZADA) ===== //
-card.addEventListener("click", function () {
-  const isActive = detailSection.classList.contains("active");
-  const container = card.closest(".plantas-cards");
-  const allCards = container.querySelectorAll(".plantas-card");
-  const allDetails = container.querySelectorAll(".plantas-details");
+// ===== SEÇÃO PLANTAS ===== //
+function initPlantasSection() {
+  const cards = document.querySelectorAll(".plantas-card");
+  const sliderButtons = document.querySelectorAll(".slider-buttons button");
 
-  if (!isActive) {
-    // Fecha todos os outros
-    allDetails.forEach((detail) => {
-      detail.classList.remove("active");
-      detail.style.display = "none";
-    });
-    allCards.forEach((c) => {
-      c.classList.add("escurecido");
-      const toggle = c.querySelector(".card-toggle");
-      if (toggle) toggle.textContent = "+";
-      c.style.maxWidth = "";
-    });
-
-    // Abre o atual
-    detailSection.classList.add("active");
-    detailSection.style.display = "block";
-    card.classList.remove("escurecido");
-    toggleBtn.textContent = "-";
-    container.classList.add("expandindo");
-    card.style.maxWidth = "640px";
-
-    // 🔽 Scroll suave até a imagem de corte
-    const corteImg = detailSection.querySelector(".plantas-cut");
-    if (corteImg) {
-      setTimeout(() => {
-        corteImg.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 200);
-    }
-  } else {
-    // Fecha o atual
-    detailSection.classList.remove("active");
-    detailSection.style.display = "none";
+  cards.forEach((card) => {
+    const toggleBtn = document.createElement("div");
+    toggleBtn.classList.add("card-toggle");
     toggleBtn.textContent = "+";
-    card.classList.add("escurecido");
-    card.style.maxWidth = "";
-    container.classList.remove("expandindo");
-  }
-});
+    card.appendChild(toggleBtn);
 
-  // Ativação dos tours ao clicar no botão
+    const projectId = card.dataset.project;
+    const detailSection = document.getElementById(`details-${projectId}`);
+
+    card.addEventListener("click", function () {
+      const isActive = detailSection.classList.contains("active");
+      const container = card.closest(".plantas-cards");
+      const allCards = container.querySelectorAll(".plantas-card");
+      const allDetails = container.querySelectorAll(".plantas-details");
+
+      if (!isActive) {
+        allDetails.forEach((detail) => {
+          detail.classList.remove("active");
+          detail.style.display = "none";
+        });
+        allCards.forEach((c) => {
+          c.classList.add("escurecido");
+          const toggle = c.querySelector(".card-toggle");
+          if (toggle) toggle.textContent = "+";
+          c.style.maxWidth = "";
+        });
+
+        detailSection.classList.add("active");
+        detailSection.style.display = "block";
+        card.classList.remove("escurecido");
+        toggleBtn.textContent = "-";
+        container.classList.add("expandindo");
+        card.style.maxWidth = "640px";
+
+        const corteImg = detailSection.querySelector(".plantas-cut");
+        if (corteImg) {
+          setTimeout(() => {
+            corteImg.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 200);
+        }
+      } else {
+        detailSection.classList.remove("active");
+        detailSection.style.display = "none";
+        toggleBtn.textContent = "+";
+        card.classList.add("escurecido");
+        card.style.maxWidth = "";
+        container.classList.remove("expandindo");
+      }
+    });
+  });
+
+  sliderButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const projectId = this.dataset.project;
+      const imageSrc = this.dataset.image;
+
+      const projectButtons = document.querySelectorAll(`[data-project="${projectId}"]`);
+      projectButtons.forEach((btn) => {
+        if (btn.tagName === "BUTTON") {
+          btn.classList.remove("ativo");
+        }
+      });
+      this.classList.add("ativo");
+
+      const plantaImg = document.getElementById(`planta-img-${projectId}`);
+      if (plantaImg) {
+        plantaImg.style.opacity = "0";
+        setTimeout(() => {
+          plantaImg.src = imageSrc;
+          plantaImg.style.opacity = "1";
+        }, 300);
+      }
+    });
+  });
+
   const tourContainers = document.querySelectorAll(".tour-container");
-
   tourContainers.forEach((container) => {
     const tourUrl = container.dataset.tour;
     const button = container.querySelector(".tour-button");
@@ -239,6 +269,7 @@ card.addEventListener("click", function () {
       });
     }
   });
+}
 
 // ===== FORMULÁRIOS ===== //
 function initForms() {
@@ -348,7 +379,6 @@ function initLazyLoading() {
   images.forEach((img) => imageObserver.observe(img))
 }
 
-// ===== FADE-IN DE IMAGENS ===== //
 function initFadeInImages() {
   const images = document.querySelectorAll("img.fade-image")
 
@@ -369,4 +399,3 @@ document.addEventListener("mousedown", function (e) {
     e.target.blur()
   }
 }, true)
-
