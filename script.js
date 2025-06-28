@@ -1,7 +1,9 @@
 // ===== INICIALIZAÇÃO ===== //
 document.addEventListener("DOMContentLoaded", () => {
   const lucide = window.lucide
-  lucide.createIcons()
+  if (lucide) {
+    lucide.createIcons()
+  }
 
   initNavigation()
   initScrollAnimations()
@@ -10,12 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initForms()
   preloadCriticalImages()
   initLazyLoading()
-  initFadeInImages() // ✅ fade-in aplicado
+  initFadeInImages()
 
   console.log("Las Villas Serra do Japi - Site carregado com sucesso!")
 })
 
-// ===== NAVEGAÇÃO ===== //
+// ===== NAVEGAÇÃO OTIMIZADA ===== //
 function initNavigation() {
   const navbar = document.getElementById("navbar")
   const navLogo = document.getElementById("nav-logo")
@@ -23,7 +25,11 @@ function initNavigation() {
   const mobileMenu = document.getElementById("mobile-menu")
   const navLinks = document.querySelectorAll(".nav-link")
 
-  window.addEventListener("scroll", () => {
+  if (!navbar || !navLogo || !menuToggle || !mobileMenu) return
+
+  // Scroll otimizado com throttle
+  let ticking = false
+  function updateNavbar() {
     if (window.scrollY > 10) {
       navbar.classList.add("scrolled")
       if (!navLogo.src.includes("las_villas_logo_transparente.webp")) {
@@ -35,9 +41,23 @@ function initNavigation() {
         navLogo.src = "img/las_villas_logo_transparente-branco.webp"
       }
     }
-  })
+    ticking = false
+  }
 
-  menuToggle.addEventListener("click", () => {
+  function requestTick() {
+    if (!ticking) {
+      requestAnimationFrame(updateNavbar)
+      ticking = true
+    }
+  }
+
+  window.addEventListener("scroll", requestTick, { passive: true })
+
+  // Menu toggle otimizado para mobile
+  menuToggle.addEventListener("click", (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+
     const isOpen = mobileMenu.classList.contains("active")
     if (isOpen) {
       mobileMenu.classList.remove("active")
@@ -46,30 +66,63 @@ function initNavigation() {
       mobileMenu.classList.add("active")
       menuToggle.innerHTML = '<i data-lucide="x"></i>'
     }
-    window.lucide.createIcons()
+
+    if (window.lucide) {
+      window.lucide.createIcons()
+    }
   })
 
+  // Links de navegação otimizados
   navLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
       e.preventDefault()
+      e.stopPropagation()
+
       const targetId = this.getAttribute("href")
       const targetSection = document.querySelector(targetId)
 
       if (targetSection) {
-        targetSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+        const offset = window.innerWidth <= 768 ? 60 : 80
+        const elementPosition = targetSection.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - offset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: window.innerWidth <= 768 ? "auto" : "smooth",
         })
+
+        // Atualizar links ativos
         navLinks.forEach((l) => l.classList.remove("active"))
         this.classList.add("active")
+
+        // Fechar menu mobile
         mobileMenu.classList.remove("active")
         menuToggle.innerHTML = '<i data-lucide="menu"></i>'
-        window.lucide.createIcons()
+        if (window.lucide) {
+          window.lucide.createIcons()
+        }
       }
     })
   })
 
-  const optimizedScrollHandler = debounce(() => {
+  // Fechar menu ao clicar fora (mobile)
+  document.addEventListener("click", (e) => {
+    if (
+      window.innerWidth <= 768 &&
+      !menuToggle.contains(e.target) &&
+      !mobileMenu.contains(e.target) &&
+      mobileMenu.classList.contains("active")
+    ) {
+      mobileMenu.classList.remove("active")
+      menuToggle.innerHTML = '<i data-lucide="menu"></i>'
+      if (window.lucide) {
+        window.lucide.createIcons()
+      }
+    }
+  })
+
+  // Scroll spy otimizado
+  const optimizedScrollHandler = throttle(() => {
     let current = ""
     const sections = document.querySelectorAll("section[id]")
 
@@ -86,178 +139,262 @@ function initNavigation() {
         link.classList.add("active")
       }
     })
-  }, 10)
+  }, 100)
 
-  window.addEventListener("scroll", optimizedScrollHandler)
+  window.addEventListener("scroll", optimizedScrollHandler, { passive: true })
 }
 
-// ===== ANIMAÇÕES DE SCROLL ===== //
+// ===== ANIMAÇÕES DE SCROLL OTIMIZADAS ===== //
 function initScrollAnimations() {
-  function checkFadeInElements() {
-    const animatedElements = document.querySelectorAll(".fade-in-up:not(.visible)")
-    const windowBottom = window.scrollY + window.innerHeight
-
-    animatedElements.forEach((el) => {
-      const elTop = el.getBoundingClientRect().top + window.scrollY
-      if (windowBottom > elTop + 100) {
-        el.classList.add("visible")
-      }
+  // Só aplicar animações no desktop
+  if (window.innerWidth <= 768) {
+    document.querySelectorAll(".fade-in-up").forEach((el) => {
+      el.classList.add("visible")
     })
+    return
   }
 
-  window.addEventListener("scroll", checkFadeInElements)
-  window.addEventListener("resize", checkFadeInElements)
-  window.addEventListener("load", checkFadeInElements)
-  setTimeout(checkFadeInElements, 300)
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible")
+          observer.unobserve(entry.target)
+        }
+      })
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    },
+  )
+
+  document.querySelectorAll(".fade-in-up").forEach((el) => {
+    observer.observe(el)
+  })
 }
 
-// ===== GALERIA SLIDER ===== //
+// ===== GALERIA SLIDER OTIMIZADA ===== //
 function initGallerySlider() {
-  const slides = document.querySelectorAll(".slide-card");
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
+  const slides = document.querySelectorAll(".slide-card")
+  const prevBtn = document.getElementById("prev-btn")
+  const nextBtn = document.getElementById("next-btn")
 
-  let currentSlide = 0;
-  let sliderInterval = setInterval(nextSlide, 5000);
+  if (!slides.length || !prevBtn || !nextBtn) return
+
+  let currentSlide = 0
+  let isTransitioning = false
 
   function showSlide(index) {
+    if (isTransitioning) return
+    isTransitioning = true
+
     slides.forEach((slide, i) => {
-      slide.classList.remove("active", "prev", "next");
+      slide.classList.remove("active", "prev", "next")
       if (i === index) {
-        slide.classList.add("active");
+        slide.classList.add("active")
       } else if (i === (index + 1) % slides.length) {
-        slide.classList.add("next");
+        slide.classList.add("next")
       } else if (i === (index - 1 + slides.length) % slides.length) {
-        slide.classList.add("prev");
+        slide.classList.add("prev")
       }
-    });
+    })
+
+    setTimeout(() => {
+      isTransitioning = false
+    }, 500)
   }
 
   function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
+    if (isTransitioning) return
+    currentSlide = (currentSlide + 1) % slides.length
+    showSlide(currentSlide)
   }
 
   function prevSlide() {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    showSlide(currentSlide);
+    if (isTransitioning) return
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length
+    showSlide(currentSlide)
   }
 
-  function resetInterval() {
-    clearInterval(sliderInterval);
-    sliderInterval = setInterval(nextSlide, 5000);
+  // Event listeners otimizados
+  nextBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    nextSlide()
+  })
+
+  prevBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    prevSlide()
+  })
+
+  // Touch events para mobile
+  if (window.innerWidth <= 768) {
+    let startX = 0
+    let endX = 0
+
+    const slideContainer = document.getElementById("slide-container")
+    if (slideContainer) {
+      slideContainer.addEventListener(
+        "touchstart",
+        (e) => {
+          startX = e.touches[0].clientX
+        },
+        { passive: true },
+      )
+
+      slideContainer.addEventListener(
+        "touchend",
+        (e) => {
+          endX = e.changedTouches[0].clientX
+          const diff = startX - endX
+
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              nextSlide()
+            } else {
+              prevSlide()
+            }
+          }
+        },
+        { passive: true },
+      )
+    }
   }
 
-  if (nextBtn && prevBtn) {
-    nextBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      nextBtn.blur();
-      nextSlide();
-      resetInterval();
-    });
+  // Auto-play pausado no mobile
+  if (window.innerWidth > 768) {
+    let autoPlayInterval = setInterval(nextSlide, 5000)
 
-    prevBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      prevBtn.blur();
-      prevSlide();
-      window.scrollTo({ top: window.scrollY, left: 0, behavior: "instant" });
-      resetInterval();
-    });
+    const sliderContainer = document.querySelector(".slider-container")
+    if (sliderContainer) {
+      sliderContainer.addEventListener("mouseenter", () => {
+        clearInterval(autoPlayInterval)
+      })
+
+      sliderContainer.addEventListener("mouseleave", () => {
+        autoPlayInterval = setInterval(nextSlide, 5000)
+      })
+    }
   }
 
-  showSlide(currentSlide);
+  showSlide(currentSlide)
 }
 
-// ===== SEÇÃO PLANTAS ===== //
+// ===== SEÇÃO PLANTAS OTIMIZADA ===== //
 function initPlantasSection() {
-  const cards = document.querySelectorAll(".plantas-card");
-  const sliderButtons = document.querySelectorAll(".slider-buttons button");
+  const cards = document.querySelectorAll(".plantas-card")
+  const sliderButtons = document.querySelectorAll(".slider-buttons button")
 
+  // Adicionar toggles aos cards
   cards.forEach((card) => {
-    const toggleBtn = document.createElement("div");
-    toggleBtn.classList.add("card-toggle");
-    toggleBtn.textContent = "+";
-    card.appendChild(toggleBtn);
+    const toggleBtn = document.createElement("div")
+    toggleBtn.classList.add("card-toggle")
+    toggleBtn.textContent = "+"
+    card.appendChild(toggleBtn)
 
-    const projectId = card.dataset.project;
-    const detailSection = document.getElementById(`details-${projectId}`);
+    const projectId = card.dataset.project
+    const detailSection = document.getElementById(`details-${projectId}`)
 
-    card.addEventListener("click", function () {
-      const isActive = detailSection.classList.contains("active");
-      const container = card.closest(".plantas-cards");
-      const allCards = container.querySelectorAll(".plantas-card");
-      const allDetails = container.querySelectorAll(".plantas-details");
+    if (!detailSection) return
+
+    card.addEventListener("click", (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      const isActive = detailSection.classList.contains("active")
+      const container = card.closest(".plantas-cards")
+      const allCards = container.querySelectorAll(".plantas-card")
+      const allDetails = container.querySelectorAll(".plantas-details")
 
       if (!isActive) {
+        // Fechar outros detalhes
         allDetails.forEach((detail) => {
-          detail.classList.remove("active");
-          detail.style.display = "none";
-        });
+          detail.classList.remove("active")
+          detail.style.display = "none"
+        })
         allCards.forEach((c) => {
-          c.classList.add("escurecido");
-          const toggle = c.querySelector(".card-toggle");
-          if (toggle) toggle.textContent = "+";
-          c.style.maxWidth = "";
-        });
+          c.classList.add("escurecido")
+          const toggle = c.querySelector(".card-toggle")
+          if (toggle) toggle.textContent = "+"
+          c.style.maxWidth = ""
+        })
 
-        detailSection.classList.add("active");
-        detailSection.style.display = "block";
-        card.classList.remove("escurecido");
-        toggleBtn.textContent = "-";
-        container.classList.add("expandindo");
-        card.style.maxWidth = "640px";
+        // Abrir este detalhe
+        detailSection.classList.add("active")
+        detailSection.style.display = "block"
+        card.classList.remove("escurecido")
+        toggleBtn.textContent = "−"
+        container.classList.add("expandindo")
+        card.style.maxWidth = "640px"
 
-        const corteImg = detailSection.querySelector(".plantas-cut");
-if (corteImg) {
-  setTimeout(() => {
-    corteImg.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, 200);
-}
+        // Scroll suave para o corte
+        setTimeout(() => {
+          const corteImg = detailSection.querySelector(".plantas-cut")
+          if (corteImg) {
+            const offset = window.innerWidth <= 768 ? 60 : 100
+            const elementPosition = corteImg.getBoundingClientRect().top
+            const offsetPosition = elementPosition + window.pageYOffset - offset
 
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: window.innerWidth <= 768 ? "auto" : "smooth",
+            })
+          }
+        }, 300)
       } else {
-        detailSection.classList.remove("active");
-        detailSection.style.display = "none";
-        toggleBtn.textContent = "+";
-        card.classList.add("escurecido");
-        card.style.maxWidth = "";
-        container.classList.remove("expandindo");
+        // Fechar este detalhe
+        detailSection.classList.remove("active")
+        detailSection.style.display = "none"
+        toggleBtn.textContent = "+"
+        card.classList.add("escurecido")
+        card.style.maxWidth = ""
+        container.classList.remove("expandindo")
       }
-    });
-  });
+    })
+  })
 
+  // Botões do slider de plantas
   sliderButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const projectId = this.dataset.project;
-      const imageSrc = this.dataset.image;
+    button.addEventListener("click", function (e) {
+      e.preventDefault()
+      e.stopPropagation()
 
-      const projectButtons = document.querySelectorAll(`[data-project="${projectId}"]`);
+      const projectId = this.dataset.project
+      const imageSrc = this.dataset.image
+
+      const projectButtons = document.querySelectorAll(`[data-project="${projectId}"]`)
       projectButtons.forEach((btn) => {
         if (btn.tagName === "BUTTON") {
-          btn.classList.remove("ativo");
+          btn.classList.remove("ativo")
         }
-      });
-      this.classList.add("ativo");
+      })
+      this.classList.add("ativo")
 
-      const plantaImg = document.getElementById(`planta-img-${projectId}`);
+      const plantaImg = document.getElementById(`planta-img-${projectId}`)
       if (plantaImg) {
-        plantaImg.style.opacity = "0";
+        plantaImg.style.opacity = "0"
         setTimeout(() => {
-          plantaImg.src = imageSrc;
-          plantaImg.style.opacity = "1";
-        }, 300);
+          plantaImg.src = imageSrc
+          plantaImg.style.opacity = "1"
+        }, 300)
       }
-    });
-  });
+    })
+  })
 
-  const tourContainers = document.querySelectorAll(".tour-container");
+  // Tour virtual
+  const tourContainers = document.querySelectorAll(".tour-container")
   tourContainers.forEach((container) => {
-    const tourUrl = container.dataset.tour;
-    const button = container.querySelector(".tour-button");
+    const tourUrl = container.dataset.tour
+    const button = container.querySelector(".tour-button")
 
     if (button) {
-      button.addEventListener("click", () => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+
         container.innerHTML = `
           <iframe
             src="${tourUrl}"
@@ -266,13 +403,13 @@ if (corteImg) {
             loading="lazy"
             style="width:100%; height:100%; border:0;">
           </iframe>
-        `;
-      });
+        `
+      })
     }
-  });
+  })
 }
 
-// ===== FORMULÁRIOS ===== //
+// ===== FORMULÁRIOS OTIMIZADOS ===== //
 function initForms() {
   const forms = document.querySelectorAll("form")
 
@@ -282,15 +419,18 @@ function initForms() {
       handleFormSubmit(this)
     })
 
-    const fields = form.querySelectorAll(".form-field")
-    fields.forEach((field) => {
-      field.addEventListener("focus", function () {
-        this.style.transform = "translateY(-2px) scale(1.02)"
+    // Efeitos nos campos (só desktop)
+    if (window.innerWidth > 768) {
+      const fields = form.querySelectorAll(".form-field")
+      fields.forEach((field) => {
+        field.addEventListener("focus", function () {
+          this.style.transform = "translateY(-2px) scale(1.02)"
+        })
+        field.addEventListener("blur", function () {
+          this.style.transform = "translateY(0) scale(1)"
+        })
       })
-      field.addEventListener("blur", function () {
-        this.style.transform = "translateY(0) scale(1)"
-      })
-    })
+    }
   })
 }
 
@@ -298,10 +438,13 @@ function handleFormSubmit(form) {
   const submitBtn = form.querySelector(".btn-enviar")
   const feedback = form.querySelector(".form-feedback")
 
+  if (!submitBtn || !feedback) return
+
   submitBtn.classList.add("sending")
   submitBtn.textContent = "ENVIANDO..."
   submitBtn.disabled = true
 
+  // Simular envio
   setTimeout(() => {
     const isSuccess = Math.random() > 0.1
 
@@ -317,7 +460,8 @@ function handleFormSubmit(form) {
         submitBtn.classList.remove("success")
         submitBtn.textContent = "ENVIAR MENSAGEM"
         submitBtn.disabled = false
-        feedback.classList.remove("show")
+        feedback.classList.remove("show", "success")
+        feedback.textContent = ""
       }, 3000)
     } else {
       submitBtn.classList.remove("sending")
@@ -330,13 +474,27 @@ function handleFormSubmit(form) {
         submitBtn.classList.remove("error")
         submitBtn.textContent = "ENVIAR MENSAGEM"
         submitBtn.disabled = false
-        feedback.classList.remove("show")
+        feedback.classList.remove("show", "error")
+        feedback.textContent = ""
       }, 3000)
     }
   }, 2000)
 }
 
-// ===== UTILITÁRIOS ===== //
+// ===== UTILITÁRIOS OTIMIZADOS ===== //
+function throttle(func, limit) {
+  let inThrottle
+  return function () {
+    const args = arguments
+    
+    if (!inThrottle) {
+      func.apply(this, args)
+      inThrottle = true
+      setTimeout(() => (inThrottle = false), limit)
+    }
+  }
+}
+
 function debounce(func, wait) {
   let timeout
   return function executedFunction(...args) {
@@ -357,6 +515,7 @@ function preloadCriticalImages() {
     "img/fachada-178.webp",
     "img/fachada-145.webp",
   ]
+
   criticalImages.forEach((src) => {
     const img = new Image()
     img.src = src
@@ -364,39 +523,77 @@ function preloadCriticalImages() {
 }
 
 function initLazyLoading() {
-  const images = document.querySelectorAll("img[data-src]")
-
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const img = entry.target
-        img.src = img.dataset.src
-        img.classList.remove("lazy")
-        imageObserver.unobserve(img)
-      }
+  if ("IntersectionObserver" in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target
+          if (img.dataset.src) {
+            img.src = img.dataset.src
+            img.classList.remove("lazy")
+          }
+          imageObserver.unobserve(img)
+        }
+      })
     })
-  })
 
-  images.forEach((img) => imageObserver.observe(img))
+    document.querySelectorAll("img[data-src]").forEach((img) => {
+      imageObserver.observe(img)
+    })
+  }
 }
 
 function initFadeInImages() {
   const images = document.querySelectorAll("img.fade-image")
 
   images.forEach((img) => {
-    if (img.complete) {
+    if (img.complete && img.naturalHeight !== 0) {
       img.classList.add("loaded")
     } else {
       img.addEventListener("load", () => {
         img.classList.add("loaded")
       })
+      img.addEventListener("error", () => {
+        img.classList.add("loaded") // Evita imagens quebradas
+      })
     }
   })
 }
 
-// ===== BLOQUEIA FOCO VISUAL INDESEJADO EM CLICKS ===== //
-document.addEventListener("mousedown", function (e) {
-  if (e.target && typeof e.target.blur === "function") {
-    e.target.blur()
-  }
-}, true)
+// ===== PREVENÇÃO DE BUGS MOBILE ===== //
+document.addEventListener("touchstart", () => {}, { passive: true })
+document.addEventListener("touchmove", () => {}, { passive: true })
+
+// Prevenir zoom duplo toque no iOS
+let lastTouchEnd = 0
+document.addEventListener(
+  "touchend",
+  (event) => {
+    const now = new Date().getTime()
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault()
+    }
+    lastTouchEnd = now
+  },
+  false,
+)
+
+// Otimização de resize
+window.addEventListener(
+  "resize",
+  debounce(() => {
+    // Fechar menu mobile se mudou para desktop
+    if (window.innerWidth > 768) {
+      const mobileMenu = document.getElementById("mobile-menu")
+      const menuToggle = document.getElementById("menu-toggle")
+
+      if (mobileMenu && menuToggle) {
+        mobileMenu.classList.remove("active")
+        menuToggle.innerHTML = '<i data-lucide="menu"></i>'
+        if (window.lucide) {
+          window.lucide.createIcons()
+        }
+      }
+    }
+  }, 250),
+)
