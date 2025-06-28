@@ -101,9 +101,11 @@ function initScrollAnimations() {
     const animatedElements = document.querySelectorAll(".fade-in-up:not(.visible):not(#mobile-menu)")
     const windowBottom = window.scrollY + window.innerHeight
 
+    const sensibilidade = window.innerWidth < 768 ? 30 : 100
+
     animatedElements.forEach((el) => {
       const elTop = el.getBoundingClientRect().top + window.scrollY
-      if (windowBottom > elTop + 100) {
+      if (windowBottom > elTop + sensibilidade) {
         el.classList.add("visible")
       }
     })
