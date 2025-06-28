@@ -37,17 +37,21 @@ function initNavigation() {
     }
   })
 
-  menuToggle.addEventListener("click", () => {
-    const isOpen = mobileMenu.classList.contains("active")
-    if (isOpen) {
-      mobileMenu.classList.remove("active")
-      menuToggle.innerHTML = '<i data-lucide="menu"></i>'
-    } else {
-      mobileMenu.classList.add("active")
-      menuToggle.innerHTML = '<i data-lucide="x"></i>'
-    }
-    window.lucide.createIcons()
-  })
+menuToggle.addEventListener("click", () => {
+  // Evita abrir menu se não for mobile
+  if (window.innerWidth >= 768) return;
+
+  const isOpen = mobileMenu.classList.contains("active")
+  if (isOpen) {
+    mobileMenu.classList.remove("active")
+    menuToggle.innerHTML = '<i data-lucide="menu"></i>'
+  } else {
+    mobileMenu.classList.add("active")
+    menuToggle.innerHTML = '<i data-lucide="x"></i>'
+  }
+
+  window.lucide.createIcons()
+})
 
   navLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
@@ -94,7 +98,7 @@ function initNavigation() {
 // ===== ANIMAÇÕES DE SCROLL ===== //
 function initScrollAnimations() {
   function checkFadeInElements() {
-    const animatedElements = document.querySelectorAll(".fade-in-up:not(.visible)")
+    const animatedElements = document.querySelectorAll(".fade-in-up:not(.visible):not(#mobile-menu)")
     const windowBottom = window.scrollY + window.innerHeight
 
     animatedElements.forEach((el) => {
