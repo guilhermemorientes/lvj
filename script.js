@@ -597,3 +597,23 @@ window.addEventListener(
     }
   }, 250),
 )
+
+// Zoom implantação
+
+function initImplantacaoZoom() {
+  const zoomBtn = document.querySelector(".zoom-btn-mobile");
+  const img = document.getElementById("implantacao-img");
+
+  if (zoomBtn && img) {
+    let zoomed = false;
+    zoomBtn.addEventListener("click", () => {
+      zoomed = !zoomed;
+      img.classList.toggle("zoomed", zoomed);
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // ... suas outras funções de init
+  initImplantacaoZoom();
+});
