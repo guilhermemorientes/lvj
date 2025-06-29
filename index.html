@@ -77,71 +77,52 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <!-- Video Background -->
-        <div class="video-container">
-            <iframe
-                src="https://www.youtube.com/embed/YMngD9okYXI?start=60&end=139&autoplay=1&mute=1&loop=1&playlist=YMngD9okYXI&rel=0&controls=0&modestbranding=1"
-                title="Las Villas Serra do Japi"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
+<!-- Hero Section -->
+<section id="hero" class="hero">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content desktop-hero fade-in-up">
+    <div class="hero-text">
+      <h1>O Cenário Perfeito<br>Para Sua Vida</h1>
+      <p>
+        O <span class="highlight">Las Villas Serra do Japi</span> é um condomínio exclusivo de casas, localizado
+        no melhor do bairro de Medeiros e projetado para que você e sua família aproveitem o melhor que a natureza
+        tem a oferecer.
+      </p>
+    </div>
+
+    <div class="hero-form">
+      <div class="form-container">
+        <div class="form-style">
+          <h3 class="form-title">Falar com Especialista</h3>
+          <form class="form-content" id="hero-form">
+            <input type="text" name="nome" placeholder="Seu nome" required class="form-field">
+            <input type="email" name="email" placeholder="Seu e-mail" required class="form-field">
+            <input type="tel" name="telefone" placeholder="Telefone/WhatsApp" required class="form-field">
+            <textarea name="informacoes" placeholder="Informações adicionais" rows="3" class="form-field"></textarea>
+            <button type="submit" class="btn-enviar">ENVIAR MENSAGEM</button>
+            <div class="form-feedback" id="hero-feedback"></div>
+          </form>
         </div>
-        <div class="hero-overlay"></div>
+      </div>
+    </div>
+  </div>
 
-        <!-- Desktop Hero -->
-        <div class="hero-content desktop-hero">
-            <div class="hero-text fade-in-up">
-                <h1>O Cenário Perfeito<br>Para Sua Vida</h1>
-                <p>
-                    O <span class="highlight">Las Villas Serra do Japi</span> é um condomínio exclusivo de casas, localizado
-                    no melhor do bairro de Medeiros e projetado para que você e sua família aproveitem o melhor que a natureza
-                    tem a oferecer.
-                </p>
-            </div>
+  <!-- Mobile hero usa a mesma imagem de fundo -->
+  <div class="hero-mobile fade-in-up">
+    <div class="hero-mobile-title">
+      <h1>O Cenário Perfeito<br>Para Sua Vida</h1>
+    </div>
 
-            <div class="hero-form fade-in-up">
-                <div class="form-container">
-                    <div class="form-style">
-                        <h3 class="form-title">Falar com Especialista</h3>
-                        <form class="form-content" id="hero-form">
-                            <input type="text" name="nome" placeholder="Seu nome" required class="form-field">
-                            <input type="email" name="email" placeholder="Seu e-mail" required class="form-field">
-                            <input type="tel" name="telefone" placeholder="Telefone/WhatsApp" required class="form-field">
-                            <textarea name="informacoes" placeholder="Informações adicionais" rows="3" class="form-field"></textarea>
-                            <button type="submit" class="btn-enviar">ENVIAR MENSAGEM</button>
-                            <div class="form-feedback" id="hero-feedback"></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Hero -->
-        <div class="hero-mobile">
-            <div class="hero-mobile-title fade-in-up">
-                <h1>O Cenário Perfeito<br>Para Sua Vida</h1>
-            </div>
-
-            <div class="hero-mobile-video fade-in-up">
-                <iframe
-                    src="https://www.youtube.com/embed/YMngD9okYXI?start=60&end=139&autoplay=1&mute=1&loop=1&playlist=YMngD9okYXI&rel=0&controls=0&modestbranding=1"
-                    title="Las Villas Serra do Japi"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-            </div>
-
-            <div class="hero-mobile-text fade-in-up">
-                <p>
-                    O <span class="highlight">Las Villas Serra do Japi</span> é um condomínio exclusivo de casas, localizado
-                    no melhor do bairro de Medeiros e projetado para que você e sua família aproveitem o melhor que a natureza
-                    tem a oferecer.
-                </p>
-            </div>
-        </div>
-    </section>
+    <div class="hero-mobile-text">
+      <p>
+        O <span class="highlight">Las Villas Serra do Japi</span> é um condomínio exclusivo de casas, localizado
+        no melhor do bairro de Medeiros e projetado para que você e sua família aproveitem o melhor que a natureza
+        tem a oferecer.
+      </p>
+    </div>
+  </div>
+</section>
 
 <!-- Sobre Section -->
 <section id="sobre" class="sobre">
@@ -247,26 +228,40 @@
         </div>
 
         <!-- BLOCO 3 -->
-        <div class="implantacao-bloco3">
-          <h3 class="implantacao-titulo">Implantação e Lazer</h3>
-          <div class="implantacao-image">
-            <img src="img/implantacao.webp" alt="Planta do condomínio Las Villas Serra do Japi" class="implantacao-img">
-          </div>
-        </div>
+<div class="implantacao-bloco3">
+  <h3 class="implantacao-titulo">Implantação e Lazer</h3>
+  <div class="implantacao-image">
+    <button class="zoom-btn-mobile" aria-label="Ver zoom">
+      <i data-lucide="zoom-in"></i>
+    </button>
+    <img src="img/implantacao.webp" alt="Planta do condomínio Las Villas Serra do Japi" class="implantacao-img" id="implantacao-img">
+  </div>
+</div>
 
       </div>
     </div>
   </div>
 </section>
 
-    <!-- Destaque Section -->
-    <section id="destaque" class="destaque">
-        <div class="destaque-content">
-            <h2 class="fade-in-up">Essencialmente Elegante e Descontraído</h2>
-            <div class="section-divider fade-in-up"></div>
-            <h3 class="fade-in-up">Com a privacidade e a tranquilidade que você merece.</h3>
-        </div>
-    </section>
+<!-- Destaque Section -->
+<section id="destaque" class="destaque">
+  <div class="destaque-content fade-in-up">
+    <h2>Essencialmente Elegante e Descontraído</h2>
+    <div class="section-divider"></div>
+
+    <div class="destaque-video-wrapper">
+      <div class="destaque-video">
+        <iframe
+          src="https://www.youtube.com/embed/YMngD9okYXI?start=60&end=139&autoplay=0&mute=0&loop=1&playlist=YMngD9okYXI&rel=0&controls=1&modestbranding=1"
+          title="Las Villas Serra do Japi"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- GALERIA -->
 <section id="galeria" class="galeria-section">
