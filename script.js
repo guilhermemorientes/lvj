@@ -460,7 +460,7 @@ function handleFormSubmit(form) {
   submitBtn.textContent = "ENVIANDO...";
   submitBtn.disabled = true;
 
-  fetch("https://script.google.com/macros/s/AKfycby_d7DlzYZvGfidGVWtQhLoqCDMiQm0pRXUk3NtRiyBVXSm03C3Gs4AblgYYYYSztTijg/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwAvZlG1K7uDu9MRE2Hew8kLzdMXuoQZ1me6VjemIwfGGeaEVXqbwCD1qbNisLGI5Vf1Q/exec", {
     method: "POST",
     body: formData
   })
