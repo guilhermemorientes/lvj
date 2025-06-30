@@ -425,87 +425,80 @@ function initPlantasSection() {
 
 // ===== FORMULÁRIOS LAS VILLAS - HERO E CONTATO ISOLADOS COM ANIMAÇÃO =====
 function handleForm(formId, feedbackId) {
-  const form = document.getElementById(formId);
-  const submitBtn = form.querySelector(".btn-enviar");
-  const feedback = document.getElementById(feedbackId);
+  const form = document.getElementById(formId)
+  const submitBtn = form.querySelector(".btn-enviar")
+  const feedback = document.getElementById(feedbackId)
 
-  if (!form || !submitBtn || !feedback) return;
+  if (!form || !submitBtn || !feedback) return
 
   form.addEventListener("submit", function (e) {
-    e.preventDefault();
+    e.preventDefault()
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = "ENVIANDO...";
-    submitBtn.classList.add("sending");
+    if (submitBtn.dataset.sending === "true") return
+    submitBtn.dataset.sending = "true"
 
-    const formData = new FormData(form);
+    submitBtn.disabled = true
+    submitBtn.textContent = "ENVIANDO..."
+    submitBtn.classList.add("sending")
+
+    const formData = new FormData(form)
     const jsonData = {
       nome: formData.get("nome")?.trim(),
       email: formData.get("email")?.trim(),
       telefone: formData.get("telefone")?.trim(),
       informacoes: formData.get("informacoes")?.trim()
-    };
+    }
 
     fetch("https://script.google.com/macros/s/AKfycbwAvZlG1K7uDu9MRE2Hew8kLzdMXuoQZ1me6VjemIwfGGeaEVXqbwCD1qbNisLGI5Vf1Q/exec", {
       method: "POST",
-      body: new URLSearchParams(jsonData)
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(jsonData)
     })
-      .then(async (res) => {
-        let json = {};
-        try {
-          json = await res.json();
-        } catch {
-          const text = await res.text();
-          json = JSON.parse(text);
-        }
+      .then(res => res.json())
+      .then(json => {
+        submitBtn.classList.remove("sending")
+        submitBtn.classList.add("success")
+        submitBtn.textContent = "ENVIADO COM SUCESSO!"
+        feedback.textContent = json.duplicate
+          ? "Lead já registrado hoje. Obrigado!"
+          : "Mensagem enviada com sucesso! Entraremos em contato."
+        feedback.classList.add("success", "show")
+        form.reset()
 
-        if (res.ok && json.success) {
-          submitBtn.classList.remove("sending");
-          submitBtn.classList.add("success");
-          submitBtn.textContent = "ENVIADO COM SUCESSO!";
-          feedback.textContent = json.duplicate
-            ? "Lead já registrado hoje. Obrigado!"
-            : "Mensagem enviada com sucesso! Entraremos em contato.";
-          feedback.classList.add("success", "show");
-          form.reset();
-
-          if (typeof gtag_report_conversion === "function") {
-            gtag_report_conversion();
-          }
-        } else {
-          throw new Error(json.error || "Erro ao enviar dados.");
+        if (typeof gtag_report_conversion === "function") {
+          gtag_report_conversion()
         }
       })
-      .catch((err) => {
-        console.error(err);
-        submitBtn.classList.remove("sending");
-        submitBtn.classList.add("error");
-        submitBtn.textContent = "ERRO NO ENVIO";
-        feedback.textContent = "Erro ao enviar. Tente novamente.";
-        feedback.classList.add("error", "show");
+      .catch(err => {
+        console.error(err)
+        submitBtn.classList.remove("sending")
+        submitBtn.classList.add("error")
+        submitBtn.textContent = "ERRO NO ENVIO"
+        feedback.textContent = "Erro ao enviar. Tente novamente."
+        feedback.classList.add("error", "show")
       })
       .finally(() => {
         setTimeout(() => {
-          feedback.classList.add("fade-out");
-
+          feedback.classList.add("fade-out")
           setTimeout(() => {
-            submitBtn.classList.remove("success", "error");
-            submitBtn.textContent = "ENVIAR MENSAGEM";
-            submitBtn.disabled = false;
-            feedback.classList.remove("show", "success", "error", "fade-out");
-            feedback.textContent = "";
-          }, 600); // tempo do fade-out
-        }, 10000); // tempo visível
-      });
-  });
+            submitBtn.classList.remove("success", "error")
+            submitBtn.textContent = "ENVIAR MENSAGEM"
+            submitBtn.disabled = false
+            submitBtn.dataset.sending = "false"
+            feedback.classList.remove("show", "success", "error", "fade-out")
+            feedback.textContent = ""
+          }, 600)
+        }, 10000)
+      })
+  })
 }
 
 function initForms() {
-  handleForm("hero-form", "hero-feedback");
-  handleForm("contato-form", "contato-feedback");
+  handleForm("hero-form", "hero-feedback")
+  handleForm("contato-form", "contato-feedback")
 }
-
-document.addEventListener("DOMContentLoaded", initForms);
 
 // ===== UTILITÁRIOS OTIMIZADOS ===== //
 function throttle(func, limit) {
