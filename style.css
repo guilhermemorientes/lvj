@@ -1030,6 +1030,25 @@ textarea.form-field:focus {
   left: 100%;
 }
 
+/* ===== IMPLANTAÇÃO SECTION ===== */
+.implantacao-conteudo {
+  background: var(--primary);
+  padding: var(--space-2xl);
+  margin-top: var(--space-xl);
+  position: relative;
+  overflow: visible; /* Permite transbordo da imagem */
+  /* border-radius: 16px; ← Removido para permitir overflow visível */
+}
+
+.implantacao-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: stretch;
+  overflow: visible;
+  position: relative;
+}
+
 /* ===== IMPLANTAÇÃO - DESKTOP ===== */
 @media (min-width: 769px) {
   .implantacao-bloco3 {
@@ -1040,6 +1059,17 @@ textarea.form-field:focus {
     height: 100%;
     position: relative;
     overflow: visible;
+  }
+
+  .implantacao-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: stretch;
+    overflow: visible !important;
+    position: relative;
+    contain: none !important;
+    content-visibility: visible !important;
   }
 
   .implantacao-titulo {
@@ -1059,11 +1089,12 @@ textarea.form-field:focus {
     width: 100%;
     position: relative;
     overflow: visible;
+    z-index: 1;
   }
 
   .implantacao-expandida {
     width: 150%;
-    transform: translateX(40%);
+    transform: translateX(30%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1072,7 +1103,7 @@ textarea.form-field:focus {
   }
 
   #implantacao-img-desktop {
-    width: 220%;
+    width: 240%;
     max-width: none !important;
     height: auto;
     object-fit: contain;
@@ -2029,8 +2060,6 @@ body {
 }
 
 /* ==== OTIMIZAÇÃO DE PERFORMANCE - CONTENT VISIBILITY ==== */
-.sobre,
-.implantacao-conteudo,
 #galeria,
 #plantas,
 #localizacao,
