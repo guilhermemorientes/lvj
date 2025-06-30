@@ -1030,43 +1030,67 @@ textarea.form-field:focus {
   left: 100%;
 }
 
-.implantacao-bloco3 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-  overflow: visible;
-}
+/* ===== IMPLANTAÇÃO - DESKTOP ===== */
+@media (min-width: 769px) {
+  .implantacao-bloco3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    position: relative;
+    overflow: visible;
+  }
 
-.implantacao-titulo {
-  color: var(--white);
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: var(--space-lg);
-  text-align: center;
-  width: 100%;
-}
+  .implantacao-titulo {
+    color: var(--white);
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0;
+  }
 
-.zoom-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  box-shadow: var(--shadow-2xl);
-  max-width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .implantacao-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    position: relative;
+    overflow: visible;
+  }
 
-.implantacao-img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  transition: transform 0.4s ease;
-  user-select: none;
-  cursor: default;
+  .implantacao-expandida {
+    width: 150%;
+    transform: translateX(40%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    border-radius: 16px;
+  }
+
+  #implantacao-img-desktop {
+    width: 220%;
+    max-width: none !important;
+    height: auto;
+    object-fit: contain;
+    border-radius: 16px;
+    cursor: default;
+    transition: transform 0.4s ease;
+  }
+
+  #implantacao-img-desktop:hover {
+    transform: scale(1.40) translateY(-8px);
+  }
+
+  /* Esconde botões e wrapper de zoom no desktop */
+  .zoom-wrapper,
+  .zoom-icon,
+  .close-zoom {
+    display: none !important;
+  }
 }
 
 /* ===== LOCALIZAÇÃO SECTION ===== */
@@ -1775,7 +1799,6 @@ textarea.form-field:focus {
 
 /* ===== IMPLANTAÇÃO - MOBILE ===== */
 @media (max-width: 768px) {
-  /* Layout empilhado */
   .implantacao-content {
     display: flex;
     flex-direction: column;
@@ -1786,34 +1809,40 @@ textarea.form-field:focus {
     width: 100%;
   }
 
-  /* Zoom wrapper */
+  /* Oculta estrutura desktop */
+  .implantacao-expandida {
+    display: none;
+  }
+
+  /* Wrapper do zoom (MOBILE) */
   .zoom-wrapper {
     position: relative;
     overflow: hidden;
     border-radius: 16px;
     box-shadow: var(--shadow-2xl);
-    max-width: 100%;
+    width: 100%;
     height: auto;
   }
 
-  /* Imagem com zoom */
-  .implantacao-img {
+  /* Imagem mobile com zoom isolado */
+  #implantacao-img-mobile {
     width: 100%;
     height: auto;
     object-fit: contain;
     transition: transform 0.4s ease;
     user-select: none;
     cursor: zoom-in;
+    border-radius: 16px;
   }
 
-  .implantacao-img.zoomed {
+  #implantacao-img-mobile.zoomed {
     transform: scale(2);
     cursor: grab;
   }
 
   /* Botões de zoom */
-  .zoom-icon,
-  .close-zoom {
+  #zoom-toggle,
+  #zoom-close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -1833,28 +1862,24 @@ textarea.form-field:focus {
     cursor: pointer;
   }
 
-  .zoom-icon:hover,
-  .close-zoom:hover {
+  #zoom-toggle:hover,
+  #zoom-close:hover {
     background: var(--accent);
     color: var(--white);
     transform: scale(1.1);
   }
 
-  .close-zoom {
+  #zoom-close {
     display: none;
   }
-}
 
-/* ===== IMPLANTAÇÃO - DESKTOP (oculta zoom e botões) ===== */
-@media (min-width: 769px) {
-  .zoom-icon,
-  .close-zoom {
-    display: none !important;
-  }
-
-  .implantacao-img.zoomed {
-    transform: none !important;
-    cursor: default;
+  /* Título visível no fundo azul */
+  .implantacao-titulo {
+    color: var(--white);
+    text-align: center;
+    margin-bottom: var(--space-md);
+    font-size: 1.4rem;
+    font-weight: 700;
   }
 }
 
