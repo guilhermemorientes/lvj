@@ -45,37 +45,39 @@
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="img/las_villas_logo_transparente-branco.webp" alt="Las Villas Serra do Japi" width="120" height="40" id="nav-logo">
-            </div>
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="nav-logo">
+      <img src="img/las_villas_logo_transparente-branco.webp" alt="Las Villas Serra do Japi" width="120" height="40" id="nav-logo">
+    </div>
 
-            <!-- Desktop Menu -->
-            <ul class="nav-menu desktop-menu">
-                <li><a href="#hero" class="nav-link active">Início</a></li>
-                <li><a href="#sobre" class="nav-link">Sobre</a></li>
-                <li><a href="#galeria" class="nav-link">Galeria</a></li>
-                <li><a href="#projeto" class="nav-link">Plantas</a></li>
-                <li><a href="#contato" class="nav-link">Contato</a></li>
-            </ul>
+    <!-- Desktop Menu -->
+    <ul class="nav-menu desktop-menu">
+      <li><a href="#hero" class="nav-link active">Início</a></li>
+      <li><a href="#sobre" class="nav-link">Sobre</a></li>
+      <li><a href="#localizacao" class="nav-link">Localização</a></li>
+      <li><a href="#galeria" class="nav-link">Galeria</a></li>
+      <li><a href="#projeto" class="nav-link">Plantas</a></li>
+      <li><a href="#contato" class="nav-link">Contato</a></li>
+    </ul>
 
-            <!-- Mobile Menu Toggle -->
-            <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Menu">
-                <i data-lucide="menu"></i>
-            </button>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Menu">
+      <i data-lucide="menu"></i>
+    </button>
 
-            <!-- Mobile Menu -->
-            <div class="mobile-menu" id="mobile-menu">
-                <a href="#hero" class="nav-link active">Início</a>
-                <a href="#sobre" class="nav-link">Sobre</a>
-                <a href="#galeria" class="nav-link">Galeria</a>
-                <a href="#projeto" class="nav-link">Plantas</a>
-                <a href="#contato" class="nav-link">Contato</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#hero" class="nav-link active">Início</a>
+      <a href="#sobre" class="nav-link">Sobre</a>
+      <a href="#localizacao" class="nav-link">Localização</a>
+      <a href="#galeria" class="nav-link">Galeria</a>
+      <a href="#projeto" class="nav-link">Plantas</a>
+      <a href="#contato" class="nav-link">Contato</a>
+    </div>
+  </div>
+</nav>
 
 <!-- Hero Section -->
 <section id="hero" class="hero">
@@ -230,34 +232,31 @@
 <div class="implantacao-bloco3">
   <h3 class="implantacao-titulo">Implantação e Lazer</h3>
   <div class="implantacao-image zoom-wrapper">
-    <img src="img/implantacao.webp" alt="Planta do condomínio Las Villas Serra do Japi"
-         class="implantacao-img" id="implantacao-img">
+    <img
+      src="img/implantacao.webp"
+      alt="Planta do condomínio Las Villas Serra do Japi"
+      class="implantacao-img"
+      id="implantacao-img"
+    >
     <button class="zoom-icon" id="zoom-toggle">+</button>
     <button class="close-zoom" id="zoom-close">✕</button>
   </div>
 </div>
+
 
       </div>
     </div>
   </div>
 </section>
 
-<!-- Destaque Section -->
-<section id="destaque" class="destaque">
-  <div class="destaque-content fade-in-up">
+<!-- Localização Section -->
+<section id="localizacao" class="localizacao">
+  <div class="localizacao-content fade-in-up">
     <h2>Essencialmente Elegante e Descontraído</h2>
     <div class="section-divider"></div>
 
-    <div class="destaque-video-wrapper">
-      <div class="destaque-video">
-        <iframe
-          src="https://www.youtube.com/embed/YMngD9okYXI?start=60&end=139&autoplay=0&mute=0&loop=1&playlist=YMngD9okYXI&rel=0&controls=1&modestbranding=1"
-          title="Las Villas Serra do Japi"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>
-      </div>
+    <div class="video-wrapper" id="localizacao-video">
+      <button class="play-btn" onclick="loadLocalizacaoVideo()">▶</button>
     </div>
   </div>
 </section>
