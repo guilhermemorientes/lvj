@@ -423,89 +423,75 @@ function initPlantasSection() {
   })
 }
 
-// ===== FORMULÁRIOS OTIMIZADOS ===== //
+// ===== FORMULÁRIO LAS VILLAS - OTIMIZADO =====
 function initForms() {
-  const forms = document.querySelectorAll("form");
+  const form = document.querySelector("form");
+  const submitBtn = document.querySelector(".btn-enviar");
+  const feedback = document.querySelector(".form-feedback");
 
-  forms.forEach((form) => {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      handleFormSubmit(this);
-    });
+  if (!form || !submitBtn || !feedback) return;
 
-    // Efeitos nos campos (só desktop)
-    if (window.innerWidth > 768) {
-      const fields = form.querySelectorAll(".form-field");
-      fields.forEach((field) => {
-        field.addEventListener("focus", function () {
-          this.style.transform = "translateY(-2px) scale(1.02)";
-        });
-        field.addEventListener("blur", function () {
-          this.style.transform = "translateY(0) scale(1)";
-        });
-      });
-    }
-  });
-}
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-function handleFormSubmit(form) {
-  const submitBtn = form.querySelector(".btn-enviar");
-  const feedback = form.querySelector(".form-feedback");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "ENVIANDO...";
+    submitBtn.classList.add("sending");
 
-  if (!submitBtn || !feedback) return;
+    const formData = new FormData(form);
+    const jsonData = {
+      nome: formData.get("nome")?.trim(),
+      email: formData.get("email")?.trim(),
+      telefone: formData.get("telefone")?.trim(),
+      informacoes: formData.get("informacoes")?.trim()
+    };
 
-  const formData = new FormData(form);
-  const jsonData = {};
+    fetch("https://script.google.com/macros/s/AKfycbwAvZlG1K7uDu9MRE2Hew8kLzdMXuoQZ1me6VjemIwfGGeaEVXqbwCD1qbNisLGI5Vf1Q/exec", {
+      method: "POST",
+      body: new URLSearchParams(jsonData)
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          submitBtn.classList.remove("sending");
+          submitBtn.classList.add("success");
+          submitBtn.textContent = "ENVIADO COM SUCESSO!";
+          feedback.textContent = "Mensagem enviada com sucesso! Entraremos em contato.";
+          feedback.classList.add("success", "show");
+          form.reset();
 
-  formData.forEach((value, key) => {
-    jsonData[key] = value.trim();
-  });
+          // CHAMADA DE CONVERSÃO ADS
+          if (typeof gtag_report_conversion === "function") {
+            gtag_report_conversion();
+          }
 
-  submitBtn.classList.add("sending");
-  submitBtn.textContent = "ENVIANDO...";
-  submitBtn.disabled = true;
-
-  fetch("https://script.google.com/macros/s/AKfycbwAvZlG1K7uDu9MRE2Hew8kLzdMXuoQZ1me6VjemIwfGGeaEVXqbwCD1qbNisLGI5Vf1Q/exec", {
-    method: "POST",
-    body: new URLSearchParams(jsonData)
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        submitBtn.classList.remove("sending");
-        submitBtn.classList.add("success");
-        submitBtn.textContent = "ENVIADO COM SUCESSO!";
-        feedback.textContent = "Mensagem enviada com sucesso! Entraremos em contato em breve.";
-        feedback.classList.add("success", "show");
-
-        // CHAMADA DE CONVERSÃO GOOGLE ADS
-        if (typeof gtag_report_conversion === "function") {
-          gtag_report_conversion();
+        } else {
+          throw new Error(res.error || "Erro ao enviar dados.");
         }
-
-        form.reset();
-      } else {
-        throw new Error(data.error || "Erro no envio");
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      submitBtn.classList.remove("sending");
-      submitBtn.classList.add("error");
-      submitBtn.textContent = "ERRO NO ENVIO";
-      feedback.textContent = "Erro ao enviar mensagem. Tente novamente.";
-      feedback.classList.add("error", "show");
-    })
-    .finally(() => {
-      setTimeout(() => {
-        submitBtn.classList.remove("success", "error");
-        submitBtn.textContent = "ENVIAR MENSAGEM";
-        submitBtn.disabled = false;
-        feedback.classList.remove("show", "success", "error");
-        feedback.textContent = "";
-      }, 3000);
-    });
+      })
+      .catch((err) => {
+        console.error(err);
+        submitBtn.classList.remove("sending");
+        submitBtn.classList.add("error");
+        submitBtn.textContent = "ERRO NO ENVIO";
+        feedback.textContent = "Erro ao enviar. Tente novamente.";
+        feedback.classList.add("error", "show");
+      })
+      .finally(() => {
+        setTimeout(() => {
+          submitBtn.classList.remove("success", "error");
+          submitBtn.textContent = "ENVIAR MENSAGEM";
+          submitBtn.disabled = false;
+          feedback.classList.remove("show", "success", "error");
+          feedback.textContent = "";
+        }, 4000);
+      });
+  });
 }
+
+document.addEventListener("DOMContentLoaded", initForms);
+
+
 
 // ===== UTILITÁRIOS OTIMIZADOS ===== //
 function throttle(func, limit) {
