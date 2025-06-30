@@ -425,74 +425,74 @@ function initPlantasSection() {
 
 // ===== FORMULÁRIOS OTIMIZADOS ===== //
 function initForms() {
-  const forms = document.querySelectorAll("form")
+  const forms = document.querySelectorAll("form");
 
   forms.forEach((form) => {
     form.addEventListener("submit", function (e) {
-      e.preventDefault()
-      handleFormSubmit(this)
-    })
+      e.preventDefault();
+      handleFormSubmit(this);
+    });
 
     // Efeitos nos campos (só desktop)
     if (window.innerWidth > 768) {
-      const fields = form.querySelectorAll(".form-field")
+      const fields = form.querySelectorAll(".form-field");
       fields.forEach((field) => {
         field.addEventListener("focus", function () {
-          this.style.transform = "translateY(-2px) scale(1.02)"
-        })
+          this.style.transform = "translateY(-2px) scale(1.02)";
+        });
         field.addEventListener("blur", function () {
-          this.style.transform = "translateY(0) scale(1)"
-        })
-      })
+          this.style.transform = "translateY(0) scale(1)";
+        });
+      });
     }
-  })
+  });
 }
 
 function handleFormSubmit(form) {
-  const submitBtn = form.querySelector(".btn-enviar")
-  const feedback = form.querySelector(".form-feedback")
+  const submitBtn = form.querySelector(".btn-enviar");
+  const feedback = form.querySelector(".form-feedback");
 
-  if (!submitBtn || !feedback) return
+  if (!submitBtn || !feedback) return;
 
-  submitBtn.classList.add("sending")
-  submitBtn.textContent = "ENVIANDO..."
-  submitBtn.disabled = true
+  const formData = new FormData(form);
 
-  // Simular envio
-  setTimeout(() => {
-    const isSuccess = Math.random() > 0.1
+  submitBtn.classList.add("sending");
+  submitBtn.textContent = "ENVIANDO...";
+  submitBtn.disabled = true;
 
-    if (isSuccess) {
-      submitBtn.classList.remove("sending")
-      submitBtn.classList.add("success")
-      submitBtn.textContent = "ENVIADO COM SUCESSO!"
-      feedback.textContent = "Mensagem enviada com sucesso! Entraremos em contato em breve."
-      feedback.classList.add("success", "show")
-      form.reset()
-
+  fetch("https://script.google.com/macros/s/AKfycby5nJHzFrmC0sNkfvBosnrn0GYTRnJrOJvSJsAHs-Po0B-__xP9UnCC9p8ZVcdt8ORv/exec", {
+    method: "POST",
+    body: formData
+  })
+    .then(response => {
+      if (response.ok) {
+        submitBtn.classList.remove("sending");
+        submitBtn.classList.add("success");
+        submitBtn.textContent = "ENVIADO COM SUCESSO!";
+        feedback.textContent = "Mensagem enviada com sucesso! Entraremos em contato em breve.";
+        feedback.classList.add("success", "show");
+        form.reset();
+      } else {
+        throw new Error("Erro na resposta do servidor.");
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      submitBtn.classList.remove("sending");
+      submitBtn.classList.add("error");
+      submitBtn.textContent = "ERRO NO ENVIO";
+      feedback.textContent = "Erro ao enviar mensagem. Tente novamente.";
+      feedback.classList.add("error", "show");
+    })
+    .finally(() => {
       setTimeout(() => {
-        submitBtn.classList.remove("success")
-        submitBtn.textContent = "ENVIAR MENSAGEM"
-        submitBtn.disabled = false
-        feedback.classList.remove("show", "success")
-        feedback.textContent = ""
-      }, 3000)
-    } else {
-      submitBtn.classList.remove("sending")
-      submitBtn.classList.add("error")
-      submitBtn.textContent = "ERRO NO ENVIO"
-      feedback.textContent = "Erro ao enviar mensagem. Tente novamente."
-      feedback.classList.add("error", "show")
-
-      setTimeout(() => {
-        submitBtn.classList.remove("error")
-        submitBtn.textContent = "ENVIAR MENSAGEM"
-        submitBtn.disabled = false
-        feedback.classList.remove("show", "error")
-        feedback.textContent = ""
-      }, 3000)
-    }
-  }, 2000)
+        submitBtn.classList.remove("success", "error");
+        submitBtn.textContent = "ENVIAR MENSAGEM";
+        submitBtn.disabled = false;
+        feedback.classList.remove("show", "success", "error");
+        feedback.textContent = "";
+      }, 3000);
+    });
 }
 
 // ===== UTILITÁRIOS OTIMIZADOS ===== //
