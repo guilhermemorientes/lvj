@@ -598,8 +598,7 @@ window.addEventListener(
   }, 250),
 )
 
-// Zoom implantação
-
+// ===== ZOOM IMPLANTAÇÃO =====
 function toggleZoom() {
   const img = document.getElementById("implantacao-img");
   const closeBtn = document.querySelector(".close-zoom");
@@ -611,7 +610,18 @@ function toggleZoom() {
   zoomBtn.style.display = zoomActive ? "none" : "block";
 }
 
+function initImplantacaoZoom() {
+  const zoomBtn = document.querySelector(".zoom-icon");
+  const closeBtn = document.querySelector(".close-zoom");
+  const img = document.getElementById("implantacao-img");
+
+  if (zoomBtn && closeBtn && img) {
+    zoomBtn.addEventListener("click", toggleZoom);
+    closeBtn.addEventListener("click", toggleZoom);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  // ... suas outras funções de init
+  // Outras funções de inicialização aqui...
   initImplantacaoZoom();
 });
