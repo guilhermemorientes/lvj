@@ -612,46 +612,42 @@ window.addEventListener(
   }, 250),
 )
 
-// ===== ZOOM IMPLANTAÇÃO =====
+// ===== ZOOM IMPLANTAÇÃO (MOBILE APENAS) =====
 function initZoomMobile() {
-  const zoomBtn = document.getElementById("zoom-toggle")
-  const closeBtn = document.getElementById("zoom-close")
-  const zoomImg = document.getElementById("implantacao-img")
+  const img = document.getElementById("implantacao-img");
+  const zoomBtn = document.getElementById("zoom-toggle");
+  const closeBtn = document.getElementById("zoom-close");
 
+  if (!img || !zoomBtn || !closeBtn) return;
+
+  function toggleZoom() {
+    const isZoomed = img.classList.toggle("zoomed");
+
+    zoomBtn.style.display = isZoomed ? "none" : "block";
+    closeBtn.style.display = isZoomed ? "block" : "none";
+
+    // Reseta transform manualmente caso necessário
+    if (!isZoomed) {
+      img.style.removeProperty("transform");
+      img.style.removeProperty("cursor");
+    }
+  }
+
+  // Aplica apenas no mobile
   if (window.innerWidth <= 768) {
-    let zoomed = false
-
-    zoomBtn.addEventListener("click", () => {
-      zoomImg.classList.add("zoomed")
-      zoomBtn.style.display = "none"
-      closeBtn.style.display = "flex"
-      zoomed = true
-    })
-
-    closeBtn.addEventListener("click", () => {
-      zoomImg.classList.remove("zoomed")
-      zoomBtn.style.display = "flex"
-      closeBtn.style.display = "none"
-      zoomed = false
-    })
-
-    // Garante que ao redimensionar a tela, tudo seja resetado
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 768) {
-        zoomImg.classList.remove("zoomed")
-        zoomBtn.style.display = "none"
-        closeBtn.style.display = "none"
-      } else {
-        zoomBtn.style.display = "flex"
-        closeBtn.style.display = "none"
-      }
-    })
+    zoomBtn.addEventListener("click", toggleZoom);
+    closeBtn.addEventListener("click", toggleZoom);
   } else {
-    // Esconde os botões no desktop
-    zoomBtn.style.display = "none"
-    closeBtn.style.display = "none"
+    // Garante que os botões estejam sempre escondidos no desktop
+    zoomBtn.style.display = "none";
+    closeBtn.style.display = "none";
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  initZoomMobile();
+});
+
 
 // Movimento com mouse/arraste
 function initZoomDrag() {
