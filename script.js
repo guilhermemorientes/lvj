@@ -625,3 +625,4 @@ document.addEventListener("DOMContentLoaded", () => {
   // Outras funções de inicialização aqui...
   initImplantacaoZoom();
 });
+
