@@ -1821,31 +1821,62 @@ textarea.form-field:focus {
     width: 100%;
   }
 
-/* ===== IMPLANTAÇÃO - ZOOM (RESPONSIVO) ===== */
-@media (max-width: 768px) {
-  .implantacao-img {
-    transform: none !important;
-  }
-
-  .implantacao-img.zoomed {
-    transform: scale(1.8);
-  }
-
-  .zoom-icon,
-  .close-zoom {
-    top: 8px;
-    right: 8px;
-    width: 32px;
-    height: 32px;
-    font-size: 1.2rem;
-  }
-
-  .zoom-icon:hover,
-  .close-zoom:hover {
-    transform: none;
-  }
+/* ===== ZOOM NA IMPLANTAÇÃO ===== */
+.implantacao-image {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--shadow-2xl);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
+.implantacao-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.implantacao-img.zoomed {
+  transform: scale(1.8);
+  z-index: 999;
+}
+
+.zoom-icon,
+.close-zoom {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  font-size: 1.5rem;
+  background: var(--white);
+  color: var(--primary);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.zoom-icon:hover,
+.close-zoom:hover {
+  background: var(--accent);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.close-zoom {
+  display: none;
+}
 
   /* Destaque */
   .destaque {
