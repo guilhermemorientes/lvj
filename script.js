@@ -614,29 +614,29 @@ window.addEventListener(
 
 // ===== ZOOM IMPLANTAÇÃO (SOMENTE MOBILE) =====
 function initZoomMobile() {
-  const img = document.getElementById("implantacao-img");
+  const img = document.getElementById("implantacao-img-mobile");
   const zoomBtn = document.getElementById("zoom-toggle");
   const closeBtn = document.getElementById("zoom-close");
 
   if (!img || !zoomBtn || !closeBtn) return;
 
-  function toggleZoom() {
-    const isZoomed = img.classList.toggle("zoomed");
+  if (window.innerWidth <= 768) {
+    zoomBtn.addEventListener("click", () => {
+      img.classList.add("zoomed");
+      zoomBtn.style.display = "none";
+      closeBtn.style.display = "flex";
+    });
 
-    zoomBtn.style.display = isZoomed ? "none" : "block";
-    closeBtn.style.display = isZoomed ? "block" : "none";
-
-    if (!isZoomed) {
-      img.style.removeProperty("transform");
-      img.style.removeProperty("cursor");
+    closeBtn.addEventListener("click", () => {
+      img.classList.remove("zoomed");
+      img.style.transform = "scale(1)";
       img.style.left = "0px";
       img.style.top = "0px";
-    }
-  }
+      img.style.cursor = "zoom-in";
+      zoomBtn.style.display = "flex";
+      closeBtn.style.display = "none";
+    });
 
-  if (window.innerWidth <= 768) {
-    zoomBtn.addEventListener("click", toggleZoom);
-    closeBtn.addEventListener("click", toggleZoom);
     initZoomDrag(img);
   } else {
     zoomBtn.style.display = "none";
@@ -695,6 +695,7 @@ function initZoomDrag(img) {
   });
 }
 
+// ===== INICIALIZAÇÃO =====
 document.addEventListener("DOMContentLoaded", () => {
   initZoomMobile();
 });
