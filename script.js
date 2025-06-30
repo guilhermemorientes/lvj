@@ -700,8 +700,3 @@ function initZoomDrag(img) {
     img.style.cursor = "grab";
   });
 }
-
-// ===== INICIALIZAÇÃO =====
-document.addEventListener("DOMContentLoaded", () => {
-  initZoomMobile();
-});
