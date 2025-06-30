@@ -613,24 +613,43 @@ window.addEventListener(
 )
 
 // ===== ZOOM IMPLANTAÇÃO =====
-function toggleZoom() {
-  const img = document.getElementById("implantacao-img");
-  const zoomInBtn = document.getElementById("zoom-toggle");
-  const zoomOutBtn = document.getElementById("zoom-close");
+function initZoomMobile() {
+  const zoomBtn = document.getElementById("zoom-toggle")
+  const closeBtn = document.getElementById("zoom-close")
+  const zoomImg = document.getElementById("implantacao-img")
 
-  img.classList.toggle("zoomed");
-  const zoomed = img.classList.contains("zoomed");
+  if (window.innerWidth <= 768) {
+    let zoomed = false
 
-  if (zoomed) {
-    zoomInBtn.style.display = "none";
-    zoomOutBtn.style.display = "block";
+    zoomBtn.addEventListener("click", () => {
+      zoomImg.classList.add("zoomed")
+      zoomBtn.style.display = "none"
+      closeBtn.style.display = "flex"
+      zoomed = true
+    })
+
+    closeBtn.addEventListener("click", () => {
+      zoomImg.classList.remove("zoomed")
+      zoomBtn.style.display = "flex"
+      closeBtn.style.display = "none"
+      zoomed = false
+    })
+
+    // Garante que ao redimensionar a tela, tudo seja resetado
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        zoomImg.classList.remove("zoomed")
+        zoomBtn.style.display = "none"
+        closeBtn.style.display = "none"
+      } else {
+        zoomBtn.style.display = "flex"
+        closeBtn.style.display = "none"
+      }
+    })
   } else {
-    zoomInBtn.style.display = "block";
-    zoomOutBtn.style.display = "none";
-    img.style.transform = "scale(1)";
-    img.style.cursor = "zoom-in";
-    img.style.removeProperty("left");
-    img.style.removeProperty("top");
+    // Esconde os botões no desktop
+    zoomBtn.style.display = "none"
+    closeBtn.style.display = "none"
   }
 }
 
