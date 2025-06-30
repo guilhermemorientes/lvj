@@ -23,25 +23,33 @@
   <!-- Favicon -->
   <link rel="icon" href="img/logo-lancamentos-jundiai.png" type="image/png">
 
-  <!-- Fonts -->
+  <!-- Fonts com display=swap (evita bloqueio de renderização) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <!-- Lucide Icons (adiado com defer) -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
 
-  <!-- Estilos -->
+  <!-- Estilos principais (pode aplicar preload opcional futuramente se quiser) -->
   <link rel="stylesheet" href="style.css">
 
   <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPSFJFZ2KP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XPSFJFZ2KP');
-  </script>
+<script>
+  window.addEventListener("load", function () {
+    const gtagScript = document.createElement("script");
+    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-XPSFJFZ2KP";
+    gtagScript.async = true;
+    document.head.appendChild(gtagScript);
+
+    gtagScript.onload = function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XPSFJFZ2KP');
+    };
+  });
+</script>
 </head>
 
 <body>
