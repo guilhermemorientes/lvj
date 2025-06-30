@@ -1821,17 +1821,14 @@ textarea.form-field:focus {
     width: 100%;
   }
 
-/* ===== ZOOM NA IMPLANTAÇÃO ===== */
-.implantacao-image {
+/* ===== ZOOM MELHORADO - IMPLANTAÇÃO ===== */
+.zoom-wrapper {
   position: relative;
-  width: 100%;
   overflow: hidden;
   border-radius: 16px;
   box-shadow: var(--shadow-2xl);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
+  max-width: 100%;
+  height: auto;
 }
 
 .implantacao-img {
@@ -1839,11 +1836,14 @@ textarea.form-field:focus {
   height: auto;
   object-fit: contain;
   transition: transform 0.4s ease;
+  cursor: zoom-in;
+  user-select: none;
 }
 
 .implantacao-img.zoomed {
-  transform: scale(1.8);
-  z-index: 999;
+  cursor: grab;
+  transform: scale(2);
+  transition: transform 0.3s ease;
 }
 
 .zoom-icon,
@@ -1852,7 +1852,7 @@ textarea.form-field:focus {
   top: 10px;
   right: 10px;
   z-index: 10;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   background: var(--white);
   color: var(--primary);
   border: none;
@@ -1867,15 +1867,19 @@ textarea.form-field:focus {
   cursor: pointer;
 }
 
-.zoom-icon:hover,
-.close-zoom:hover {
-  background: var(--accent);
-  color: var(--white);
-  transform: scale(1.1);
-}
-
 .close-zoom {
   display: none;
+}
+
+/* MOBILE drag (mantém visível mas remove transform no hover) */
+@media (max-width: 768px) {
+  .implantacao-img {
+    transform: none !important;
+  }
+
+  .implantacao-img.zoomed {
+    transform: scale(2);
+  }
 }
 
   /* Destaque */
