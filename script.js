@@ -472,12 +472,6 @@ function handleFormSubmit(form) {
         feedback.textContent = "Mensagem enviada com sucesso! Entraremos em contato em breve.";
         feedback.classList.add("success", "show");
         form.reset();
-
-        // CHAMADA DE CONVERSÃO GOOGLE ADS
-        if (typeof gtag_report_conversion === "function") {
-          gtag_report_conversion();
-        }
-
       } else {
         throw new Error("Erro na resposta do servidor.");
       }
