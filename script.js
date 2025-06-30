@@ -612,7 +612,7 @@ window.addEventListener(
   }, 250),
 )
 
-// ===== ZOOM IMPLANTAÇÃO (MOBILE APENAS) =====
+// ===== ZOOM IMPLANTAÇÃO (SOMENTE MOBILE) =====
 function initZoomMobile() {
   const img = document.getElementById("implantacao-img");
   const zoomBtn = document.getElementById("zoom-toggle");
@@ -626,51 +626,67 @@ function initZoomMobile() {
     zoomBtn.style.display = isZoomed ? "none" : "block";
     closeBtn.style.display = isZoomed ? "block" : "none";
 
-    // Reseta transform manualmente caso necessário
     if (!isZoomed) {
       img.style.removeProperty("transform");
       img.style.removeProperty("cursor");
+      img.style.left = "0px";
+      img.style.top = "0px";
     }
   }
 
-  // Aplica apenas no mobile
   if (window.innerWidth <= 768) {
     zoomBtn.addEventListener("click", toggleZoom);
     closeBtn.addEventListener("click", toggleZoom);
+    initZoomDrag(img);
   } else {
-    // Garante que os botões estejam sempre escondidos no desktop
     zoomBtn.style.display = "none";
     closeBtn.style.display = "none";
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initZoomMobile();
-});
-
-
-// Movimento com mouse/arraste
-function initZoomDrag() {
-  const img = document.getElementById("implantacao-img");
+// ===== MOVIMENTO DA IMAGEM ZOOMADA (ARRASTE) =====
+function initZoomDrag(img) {
   let isDragging = false;
-  let startX, startY, initialX, initialY;
+  let startX, startY;
+  let currentX = 0;
+  let currentY = 0;
+
+  img.addEventListener("touchstart", (e) => {
+    if (!img.classList.contains("zoomed")) return;
+    isDragging = true;
+    const touch = e.touches[0];
+    startX = touch.clientX - currentX;
+    startY = touch.clientY - currentY;
+    img.style.cursor = "grabbing";
+  });
+
+  img.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    currentX = touch.clientX - startX;
+    currentY = touch.clientY - startY;
+    img.style.transform = `scale(2) translate(${currentX}px, ${currentY}px)`;
+  });
+
+  img.addEventListener("touchend", () => {
+    isDragging = false;
+    img.style.cursor = "grab";
+  });
 
   img.addEventListener("mousedown", (e) => {
     if (!img.classList.contains("zoomed")) return;
     isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    initialX = img.offsetLeft;
-    initialY = img.offsetTop;
+    startX = e.clientX - currentX;
+    startY = e.clientY - currentY;
     img.style.cursor = "grabbing";
     e.preventDefault();
   });
 
   document.addEventListener("mousemove", (e) => {
     if (!isDragging) return;
-    let dx = e.clientX - startX;
-    let dy = e.clientY - startY;
-    img.style.transform = `scale(2) translate(${dx}px, ${dy}px)`;
+    currentX = e.clientX - startX;
+    currentY = e.clientY - startY;
+    img.style.transform = `scale(2) translate(${currentX}px, ${currentY}px)`;
   });
 
   document.addEventListener("mouseup", () => {
@@ -679,13 +695,6 @@ function initZoomDrag() {
   });
 }
 
-function initImplantacaoZoom() {
-  document.getElementById("zoom-toggle").addEventListener("click", toggleZoom);
-  document.getElementById("zoom-close").addEventListener("click", toggleZoom);
-  initZoomDrag();
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  initImplantacaoZoom();
+  initZoomMobile();
 });
-
