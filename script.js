@@ -423,7 +423,6 @@ function initPlantasSection() {
   })
 }
 
-// ===== FORMULÁRIOS OTIMIZADOS ===== //
 function initForms() {
   const forms = document.querySelectorAll("form");
 
@@ -433,7 +432,6 @@ function initForms() {
       handleFormSubmit(this);
     });
 
-    // Efeitos nos campos (só desktop)
     if (window.innerWidth > 768) {
       const fields = form.querySelectorAll(".form-field");
       fields.forEach((field) => {
@@ -451,11 +449,9 @@ function initForms() {
 function handleFormSubmit(form) {
   const submitBtn = form.querySelector(".btn-enviar");
   const feedback = form.querySelector(".form-feedback");
-
   if (!submitBtn || !feedback) return;
 
   const formData = new FormData(form);
-
   submitBtn.classList.add("sending");
   submitBtn.textContent = "ENVIANDO...";
   submitBtn.disabled = true;
@@ -464,16 +460,23 @@ function handleFormSubmit(form) {
     method: "POST",
     body: formData
   })
-    .then(response => {
-      if (response.ok) {
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "sucesso") {
         submitBtn.classList.remove("sending");
         submitBtn.classList.add("success");
         submitBtn.textContent = "ENVIADO COM SUCESSO!";
         feedback.textContent = "Mensagem enviada com sucesso! Entraremos em contato em breve.";
         feedback.classList.add("success", "show");
         form.reset();
+
+        // Google Ads Conversion
+        if (typeof gtag_report_conversion === "function") {
+          gtag_report_conversion();
+        }
+
       } else {
-        throw new Error("Erro na resposta do servidor.");
+        throw new Error(data.message || "Erro desconhecido.");
       }
     })
     .catch(error => {
