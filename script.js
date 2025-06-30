@@ -423,11 +423,11 @@ function initPlantasSection() {
   })
 }
 
-// ===== FORMULÁRIO LAS VILLAS - OTIMIZADO =====
-function initForms() {
-  const form = document.querySelector("form");
-  const submitBtn = document.querySelector(".btn-enviar");
-  const feedback = document.querySelector(".form-feedback");
+// ===== FORMULÁRIOS LAS VILLAS - HERO E CONTATO ISOLADOS COM ANIMAÇÃO =====
+function handleForm(formId, feedbackId) {
+  const form = document.getElementById(formId);
+  const submitBtn = form.querySelector(".btn-enviar");
+  const feedback = document.getElementById(feedbackId);
 
   if (!form || !submitBtn || !feedback) return;
 
@@ -451,16 +451,24 @@ function initForms() {
       body: new URLSearchParams(jsonData)
     })
       .then(async (res) => {
-        const json = await res.json();
+        let json = {};
+        try {
+          json = await res.json();
+        } catch {
+          const text = await res.text();
+          json = JSON.parse(text);
+        }
+
         if (res.ok && json.success) {
           submitBtn.classList.remove("sending");
           submitBtn.classList.add("success");
           submitBtn.textContent = "ENVIADO COM SUCESSO!";
-          feedback.textContent = "Mensagem enviada com sucesso! Entraremos em contato.";
+          feedback.textContent = json.duplicate
+            ? "Lead já registrado hoje. Obrigado!"
+            : "Mensagem enviada com sucesso! Entraremos em contato.";
           feedback.classList.add("success", "show");
           form.reset();
 
-          // CHAMADA DE CONVERSÃO ADS
           if (typeof gtag_report_conversion === "function") {
             gtag_report_conversion();
           }
@@ -478,18 +486,26 @@ function initForms() {
       })
       .finally(() => {
         setTimeout(() => {
-          submitBtn.classList.remove("success", "error");
-          submitBtn.textContent = "ENVIAR MENSAGEM";
-          submitBtn.disabled = false;
-          feedback.classList.remove("show", "success", "error");
-          feedback.textContent = "";
-        }, 4000);
+          feedback.classList.add("fade-out");
+
+          setTimeout(() => {
+            submitBtn.classList.remove("success", "error");
+            submitBtn.textContent = "ENVIAR MENSAGEM";
+            submitBtn.disabled = false;
+            feedback.classList.remove("show", "success", "error", "fade-out");
+            feedback.textContent = "";
+          }, 600); // tempo do fade-out
+        }, 10000); // tempo visível
       });
   });
 }
 
-document.addEventListener("DOMContentLoaded", initForms);
+function initForms() {
+  handleForm("hero-form", "hero-feedback");
+  handleForm("contato-form", "contato-feedback");
+}
 
+document.addEventListener("DOMContentLoaded", initForms);
 
 // ===== UTILITÁRIOS OTIMIZADOS ===== //
 function throttle(func, limit) {
