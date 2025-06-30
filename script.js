@@ -492,7 +492,6 @@ function initForms() {
 document.addEventListener("DOMContentLoaded", initForms);
 
 
-
 // ===== UTILITÁRIOS OTIMIZADOS ===== //
 function throttle(func, limit) {
   let inThrottle
