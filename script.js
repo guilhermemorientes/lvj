@@ -452,7 +452,7 @@ function handleForm(formId, feedbackId) {
     console.log("Enviando dados:", jsonData)
 
     const scriptUrl =
-      "https://script.google.com/macros/s/AKfycby_d7DlzYZvGfidGVWtQhLoqCDMiQm0pRXUk3NtRiyBVXSm03C3Gs4AblgYYYYSztTijg/exec"
+      "https://script.google.com/macros/s/AKfycbzPrO5QLR5ynXLw6eoBUOOax1ibQbGz6ang8yPvuSiOi-DY1W7IyOEHmPb8WHpMekSB/exec"
 
     try {
       // TENTATIVA 1: Envio com JSON (método preferido)
