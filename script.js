@@ -601,30 +601,62 @@ window.addEventListener(
 // ===== ZOOM IMPLANTAÇÃO =====
 function toggleZoom() {
   const img = document.getElementById("implantacao-img");
-  const closeBtn = document.getElementById("zoom-close");
-  const zoomBtn = document.getElementById("zoom-toggle");
+  const zoomInBtn = document.getElementById("zoom-toggle");
+  const zoomOutBtn = document.getElementById("zoom-close");
 
-  if (img.classList.contains("zoomed")) {
-    img.classList.remove("zoomed");
-    closeBtn.style.display = "none";
-    zoomBtn.style.display = "block";
+  img.classList.toggle("zoomed");
+  const zoomed = img.classList.contains("zoomed");
+
+  if (zoomed) {
+    zoomInBtn.style.display = "none";
+    zoomOutBtn.style.display = "block";
   } else {
-    img.classList.add("zoomed");
-    closeBtn.style.display = "block";
-    zoomBtn.style.display = "none";
+    zoomInBtn.style.display = "block";
+    zoomOutBtn.style.display = "none";
+    img.style.transform = "scale(1)";
+    img.style.cursor = "zoom-in";
+    img.style.removeProperty("left");
+    img.style.removeProperty("top");
   }
 }
 
-function initImplantacaoZoom() {
-  const zoomBtn = document.getElementById("zoom-toggle");
-  const closeBtn = document.getElementById("zoom-close");
+// Movimento com mouse/arraste
+function initZoomDrag() {
+  const img = document.getElementById("implantacao-img");
+  let isDragging = false;
+  let startX, startY, initialX, initialY;
 
-  if (zoomBtn && closeBtn) {
-    zoomBtn.addEventListener("click", toggleZoom);
-    closeBtn.addEventListener("click", toggleZoom);
-  }
+  img.addEventListener("mousedown", (e) => {
+    if (!img.classList.contains("zoomed")) return;
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    initialX = img.offsetLeft;
+    initialY = img.offsetTop;
+    img.style.cursor = "grabbing";
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    let dx = e.clientX - startX;
+    let dy = e.clientY - startY;
+    img.style.transform = `scale(2) translate(${dx}px, ${dy}px)`;
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+    img.style.cursor = "grab";
+  });
+}
+
+function initImplantacaoZoom() {
+  document.getElementById("zoom-toggle").addEventListener("click", toggleZoom);
+  document.getElementById("zoom-close").addEventListener("click", toggleZoom);
+  initZoomDrag();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   initImplantacaoZoom();
 });
+
