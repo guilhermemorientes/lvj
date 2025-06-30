@@ -1069,63 +1069,6 @@ textarea.form-field:focus {
   cursor: default;
 }
 
-/* ===== IMPLANTAÇÃO - ZOOM MOBILE ===== */
-@media (max-width: 768px) {
-  .implantacao-img {
-    cursor: zoom-in;
-  }
-
-  .implantacao-img.zoomed {
-    transform: scale(2);
-    cursor: grab;
-  }
-
-  .zoom-icon,
-  .close-zoom {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 10;
-    font-size: 1.2rem;
-    background: var(--white);
-    color: var(--primary);
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: var(--shadow-md);
-    transition: var(--transition);
-    cursor: pointer;
-  }
-
-  .zoom-icon:hover,
-  .close-zoom:hover {
-    background: var(--accent);
-    color: var(--white);
-    transform: scale(1.1);
-  }
-
-  .close-zoom {
-    display: none;
-  }
-}
-
-/* Esconde botões e efeito zoom no desktop */
-@media (min-width: 769px) {
-  .zoom-icon,
-  .close-zoom {
-    display: none !important;
-  }
-
-  .implantacao-img.zoomed {
-    transform: none !important;
-    cursor: default;
-  }
-}
-
 /* ===== LOCALIZAÇÃO SECTION ===== */
 .localizacao {
   position: relative;
@@ -1815,9 +1758,9 @@ textarea.form-field:focus {
     font-size: 1rem;
   }
 
-  /* Sobre */
+/* ===== IMPLANTAÇÃO - MOBILE ===== */
 @media (max-width: 768px) {
-  /* Layout empilhado da seção Implantação */
+  /* Layout empilhado */
   .implantacao-content {
     display: flex;
     flex-direction: column;
@@ -1828,28 +1771,23 @@ textarea.form-field:focus {
     width: 100%;
   }
 
-/* ===== ZOOM MOBILE - IMPLANTAÇÃO ===== */
-.zoom-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  box-shadow: var(--shadow-2xl);
-  max-width: 100%;
-  height: auto;
-}
+  /* Zoom wrapper */
+  .zoom-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: var(--shadow-2xl);
+    max-width: 100%;
+    height: auto;
+  }
 
-.implantacao-img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  transition: transform 0.4s ease;
-  user-select: none;
-  cursor: default;
-}
-
-/* BOTÕES E ZOOM SOMENTE NO MOBILE */
-@media (max-width: 768px) {
+  /* Imagem com zoom */
   .implantacao-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+    user-select: none;
     cursor: zoom-in;
   }
 
@@ -1858,6 +1796,7 @@ textarea.form-field:focus {
     cursor: grab;
   }
 
+  /* Botões de zoom */
   .zoom-icon,
   .close-zoom {
     position: absolute;
@@ -1891,7 +1830,7 @@ textarea.form-field:focus {
   }
 }
 
-/* ESCONDE TUDO NO DESKTOP */
+/* ===== IMPLANTAÇÃO - DESKTOP (oculta zoom e botões) ===== */
 @media (min-width: 769px) {
   .zoom-icon,
   .close-zoom {
@@ -2047,5 +1986,4 @@ body {
 
 .fade-image.loaded {
   opacity: 1;
-}
 }
