@@ -600,17 +600,15 @@ window.addEventListener(
 
 // Zoom implantação
 
-function initImplantacaoZoom() {
-  const zoomBtn = document.querySelector(".zoom-btn-mobile");
+function toggleZoom() {
   const img = document.getElementById("implantacao-img");
+  const closeBtn = document.querySelector(".close-zoom");
+  const zoomBtn = document.querySelector(".zoom-icon");
 
-  if (zoomBtn && img) {
-    let zoomed = false;
-    zoomBtn.addEventListener("click", () => {
-      zoomed = !zoomed;
-      img.classList.toggle("zoomed", zoomed);
-    });
-  }
+  img.classList.toggle("zoomed");
+  const zoomActive = img.classList.contains("zoomed");
+  closeBtn.style.display = zoomActive ? "block" : "none";
+  zoomBtn.style.display = zoomActive ? "none" : "block";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
