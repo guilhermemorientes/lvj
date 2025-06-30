@@ -1068,7 +1068,7 @@ textarea.form-field:focus {
   z-index: 2;
 }
 
-/* ===== IMPLANTAÇÃO - ZOOM ===== */
+/* ===== IMPLANTAÇÃO - ZOOM (GLOBAL E DESKTOP) ===== */
 .implantacao-image {
   position: relative;
   width: 100%;
@@ -1124,12 +1124,6 @@ textarea.form-field:focus {
 
 .close-zoom {
   display: none;
-}
-
-@media (max-width: 768px) {
-  .implantacao-img:hover {
-    transform: none;
-  }
 }
 
 /* ===== DESTAQUE SECTION ===== */
@@ -1827,45 +1821,31 @@ textarea.form-field:focus {
     width: 100%;
   }
 
-  /* Zoom na imagem da planta */
-  .implantacao-image {
-    position: relative;
-    overflow: hidden;
-  }
-
+/* ===== IMPLANTAÇÃO - ZOOM (RESPONSIVO) ===== */
+@media (max-width: 768px) {
   .implantacao-img {
-    max-width: 100%;
-    width: 100%;
-    transform: translateX(0);
-    transition: transform 0.4s ease;
-    transform-origin: center center;
+    transform: none !important;
   }
 
   .implantacao-img.zoomed {
-    transform: scale(2);
+    transform: scale(1.8);
   }
 
-  .zoom-btn-mobile {
-    position: absolute;
-    top: var(--space-sm);
-    right: var(--space-sm);
-    background: rgba(255, 255, 255, 0.85);
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    z-index: 2;
-    box-shadow: var(--shadow-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
+  .zoom-icon,
+  .close-zoom {
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
   }
 
-  .zoom-btn-mobile:hover {
-    background: var(--accent-light);
+  .zoom-icon:hover,
+  .close-zoom:hover {
+    transform: none;
   }
 }
+
 
   /* Destaque */
   .destaque {
@@ -2010,4 +1990,5 @@ body {
 
 .fade-image.loaded {
   opacity: 1;
+}
 }
