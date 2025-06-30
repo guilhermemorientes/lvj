@@ -145,6 +145,20 @@ function initNavigation() {
 }
 
 // ===== ANIMAÇÕES DE SCROLL OTIMIZADAS ===== //
+function loadLocalizacaoVideo() {
+  const container = document.getElementById("localizacao-video");
+  container.innerHTML = `
+    <iframe
+      src="https://www.youtube.com/embed/YMngD9okYXI?start=60&end=139&autoplay=1&mute=0&loop=1&playlist=YMngD9okYXI&rel=0&controls=1&modestbranding=1"
+      title="Las Villas Serra do Japi"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      loading="lazy"
+      style="width:100%; height:100%; border:0;"
+    ></iframe>
+  `;
+}
+
 function initScrollAnimations() {
   // Só aplicar animações no desktop
   if (window.innerWidth <= 768) {
