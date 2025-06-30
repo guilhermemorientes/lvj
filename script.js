@@ -423,6 +423,7 @@ function initPlantasSection() {
   })
 }
 
+// ===== FORMULÁRIOS OTIMIZADOS ===== //
 function initForms() {
   const forms = document.querySelectorAll("form");
 
@@ -432,6 +433,7 @@ function initForms() {
       handleFormSubmit(this);
     });
 
+    // Efeitos nos campos (só desktop)
     if (window.innerWidth > 768) {
       const fields = form.querySelectorAll(".form-field");
       fields.forEach((field) => {
@@ -449,34 +451,41 @@ function initForms() {
 function handleFormSubmit(form) {
   const submitBtn = form.querySelector(".btn-enviar");
   const feedback = form.querySelector(".form-feedback");
+
   if (!submitBtn || !feedback) return;
 
   const formData = new FormData(form);
+  const jsonData = {};
+
+  formData.forEach((value, key) => {
+    jsonData[key] = value.trim();
+  });
+
   submitBtn.classList.add("sending");
   submitBtn.textContent = "ENVIANDO...";
   submitBtn.disabled = true;
 
   fetch("https://script.google.com/macros/s/AKfycbwAvZlG1K7uDu9MRE2Hew8kLzdMXuoQZ1me6VjemIwfGGeaEVXqbwCD1qbNisLGI5Vf1Q/exec", {
     method: "POST",
-    body: formData
+    body: new URLSearchParams(jsonData)
   })
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
-      if (data.status === "sucesso") {
+      if (data.success) {
         submitBtn.classList.remove("sending");
         submitBtn.classList.add("success");
         submitBtn.textContent = "ENVIADO COM SUCESSO!";
         feedback.textContent = "Mensagem enviada com sucesso! Entraremos em contato em breve.";
         feedback.classList.add("success", "show");
-        form.reset();
 
-        // Google Ads Conversion
+        // CHAMADA DE CONVERSÃO GOOGLE ADS
         if (typeof gtag_report_conversion === "function") {
           gtag_report_conversion();
         }
 
+        form.reset();
       } else {
-        throw new Error(data.message || "Erro desconhecido.");
+        throw new Error(data.error || "Erro no envio");
       }
     })
     .catch(error => {
