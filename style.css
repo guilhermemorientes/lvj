@@ -1094,15 +1094,36 @@ textarea.form-field:focus {
   z-index: 999;
 }
 
-.zoom-icon {
+.zoom-icon,
+.close-zoom {
   position: absolute;
   top: 10px;
   right: 10px;
   z-index: 10;
   font-size: 1.5rem;
-  background: transparent;
+  background: var(--white);
+  color: var(--primary);
   border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
   cursor: pointer;
+}
+
+.zoom-icon:hover,
+.close-zoom:hover {
+  background: var(--accent);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.close-zoom {
+  display: none;
 }
 
 @media (max-width: 768px) {
