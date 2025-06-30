@@ -34,7 +34,7 @@
   <!-- Estilos principais (pode aplicar preload opcional futuramente se quiser) -->
   <link rel="stylesheet" href="style.css">
 
-<!-- Google Analytics -->
+<!-- Google Analytics + Google Ads -->
 <script>
   window.addEventListener("load", function () {
     const gtagScript = document.createElement("script");
@@ -44,7 +44,7 @@
 
     gtagScript.onload = function () {
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
 
       // Google Analytics
@@ -54,6 +54,24 @@
       gtag('config', 'AW-17285585132');
     };
   });
+</script>
+
+<!-- Conversão Google Ads: botão enviar formulário -->
+<script>
+  function gtag_report_conversion(url) {
+    var callback = function () {
+      if (typeof url !== 'undefined') {
+        window.location = url;
+      }
+    };
+    gtag('event', 'conversion', {
+      'send_to': 'AW-17285585132/zGpYCJ7XtOYaEOyxtLJA',
+      'value': 1.0,
+      'currency': 'BRL',
+      'event_callback': callback
+    });
+    return false;
+  }
 </script>
 </head>
 
