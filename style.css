@@ -1068,48 +1068,47 @@ textarea.form-field:focus {
   z-index: 2;
 }
 
-/* Zoom ativado */
-.implantacao-img.zoomed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw !important;
-  height: 100vh !important;
-  object-fit: contain;
-  z-index: 999;
-  background: rgba(0, 0, 0, 0.95);
-  transform: scale(1.1);
-  border-radius: 0;
+/* ===== IMPLANTAÇÃO - ZOOM ===== */
+.implantacao-image {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--shadow-2xl);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
-/* Botão lupa */
+.implantacao-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.implantacao-img.zoomed {
+  transform: scale(1.8);
+  z-index: 999;
+}
+
 .zoom-icon {
   position: absolute;
   top: 10px;
   right: 10px;
   z-index: 10;
   font-size: 1.5rem;
-  background: rgba(255, 255, 255, 0.8);
+  background: transparent;
   border: none;
-  border-radius: 50%;
-  padding: 6px;
   cursor: pointer;
 }
 
-/* Botão fechar zoom */
-.close-zoom {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 10;
-  font-size: 1.5rem;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  padding: 6px;
-  cursor: pointer;
-  display: none;
+@media (max-width: 768px) {
+  .implantacao-img:hover {
+    transform: none;
+  }
 }
 
 /* ===== DESTAQUE SECTION ===== */
