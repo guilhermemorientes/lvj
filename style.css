@@ -1124,6 +1124,49 @@ textarea.form-field:focus {
   margin-bottom: var(--space-md);
 }
 
+/* ===== TEXTO DA SEÇÃO ===== */
+.localizacao-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--white);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  margin-bottom: var(--space-lg);
+  max-width: 800px;
+}
+
+/* ===== VÍDEO PLACEHOLDER E BOTÃO PLAY ===== */
+.video-wrapper {
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-btn {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  font-size: 2rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.2s ease;
+}
+
+.play-btn:hover {
+  transform: scale(1.1);
+}
+
 /* ===== GALERIA SECTION ===== */
 .galeria-section {
   padding: 0;
