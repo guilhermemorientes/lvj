@@ -2058,3 +2058,12 @@ body {
 .fade-image.loaded {
   opacity: 1;
 }
+
+/* ==== OTIMIZAÇÃO DE PERFORMANCE - CONTENT VISIBILITY ==== */
+#galeria,
+#plantas,
+#localizacao {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
+  contain: layout style;
+}
