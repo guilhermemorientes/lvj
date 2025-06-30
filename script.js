@@ -450,9 +450,9 @@ function initForms() {
       method: "POST",
       body: new URLSearchParams(jsonData)
     })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.success) {
+      .then(async (res) => {
+        const json = await res.json();
+        if (res.ok && json.success) {
           submitBtn.classList.remove("sending");
           submitBtn.classList.add("success");
           submitBtn.textContent = "ENVIADO COM SUCESSO!";
@@ -464,9 +464,8 @@ function initForms() {
           if (typeof gtag_report_conversion === "function") {
             gtag_report_conversion();
           }
-
         } else {
-          throw new Error(res.error || "Erro ao enviar dados.");
+          throw new Error(json.error || "Erro ao enviar dados.");
         }
       })
       .catch((err) => {
