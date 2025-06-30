@@ -601,28 +601,30 @@ window.addEventListener(
 // ===== ZOOM IMPLANTAÇÃO =====
 function toggleZoom() {
   const img = document.getElementById("implantacao-img");
-  const closeBtn = document.querySelector(".close-zoom");
-  const zoomBtn = document.querySelector(".zoom-icon");
+  const closeBtn = document.getElementById("zoom-close");
+  const zoomBtn = document.getElementById("zoom-toggle");
 
-  img.classList.toggle("zoomed");
-  const zoomActive = img.classList.contains("zoomed");
-  closeBtn.style.display = zoomActive ? "block" : "none";
-  zoomBtn.style.display = zoomActive ? "none" : "block";
+  if (img.classList.contains("zoomed")) {
+    img.classList.remove("zoomed");
+    closeBtn.style.display = "none";
+    zoomBtn.style.display = "block";
+  } else {
+    img.classList.add("zoomed");
+    closeBtn.style.display = "block";
+    zoomBtn.style.display = "none";
+  }
 }
 
 function initImplantacaoZoom() {
-  const zoomBtn = document.querySelector(".zoom-icon");
-  const closeBtn = document.querySelector(".close-zoom");
-  const img = document.getElementById("implantacao-img");
+  const zoomBtn = document.getElementById("zoom-toggle");
+  const closeBtn = document.getElementById("zoom-close");
 
-  if (zoomBtn && closeBtn && img) {
+  if (zoomBtn && closeBtn) {
     zoomBtn.addEventListener("click", toggleZoom);
     closeBtn.addEventListener("click", toggleZoom);
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Outras funções de inicialização aqui...
   initImplantacaoZoom();
 });
-
