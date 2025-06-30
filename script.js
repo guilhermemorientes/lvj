@@ -495,11 +495,6 @@ function handleFormSubmit(form) {
     });
 }
 
-// ===== FUNÇÃO NECESSÁRIA PARA EVITAR ERRO NO ACESSO DIRETO À URL ===== //
-function doGet(e) {
-  return HtmlService.createHtmlOutput("App executando corretamente.");
-}
-
 // ===== UTILITÁRIOS OTIMIZADOS ===== //
 function throttle(func, limit) {
   let inThrottle
