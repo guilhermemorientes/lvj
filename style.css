@@ -517,32 +517,58 @@ p {
   display: none;
 }
 
-/* ===== FORMULÁRIOS 3D - VERSÃO REALISTA AJUSTADA ===== */
+/* ===== VARIÁVEIS DO FORMULÁRIO ===== */
+:root {
+  --form-radius: 20px;
+  --form-padding: 2.5rem;
+  --form-shadow: 
+    0 24px 48px -16px rgba(0, 0, 0, 0.18),
+    0 16px 32px -8px rgba(0, 0, 0, 0.12),
+    0 8px 16px -4px rgba(0, 0, 0, 0.08);
+  --form-input-gradient: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  --form-glow: 0 0 36px rgba(230, 126, 34, 0.15);
+}
 
+/* ===== ANIMAÇÕES ===== */
+@keyframes formGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.6;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+/* ===== FORMULÁRIO ===== */
 .form-container {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  position: relative;
   padding: 3rem;
-  filter: drop-shadow(0 20px 36px rgba(0, 0, 0, 0.14)); /* sombra externa mais natural */
+  position: relative;
+  filter: drop-shadow(0 20px 36px rgba(0, 0, 0, 0.14));
 }
 
 .form-style {
   background: linear-gradient(145deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
-  padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow:
-    0 24px 48px -16px rgba(0, 0, 0, 0.18),
-    0 16px 32px -8px rgba(0, 0, 0, 0.12),
-    0 8px 16px -4px rgba(0, 0, 0, 0.08),
-    inset 0 1px 2px rgba(255, 255, 255, 0.8),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(226, 232, 240, 0.65);
+  padding: var(--form-padding);
+  border-radius: var(--form-radius);
+  box-shadow: var(--form-shadow), inset 0 1px 2px rgba(255,255,255,0.8), inset 0 -1px 1px rgba(0,0,0,0.05);
+  border: 1px solid rgba(226,232,240,0.65);
   backdrop-filter: blur(18px);
   position: relative;
   overflow: hidden;
-  transform-style: preserve-3d;
   transition: var(--transition);
 }
 
@@ -553,16 +579,9 @@ p {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--accent) 25%,
-    var(--accent-light) 50%,
-    var(--accent) 75%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 25%, var(--accent-light) 50%, var(--accent) 75%, transparent 100%);
   opacity: 0.85;
-  border-radius: 20px 20px 0 0;
+  border-radius: var(--form-radius) var(--form-radius) 0 0;
 }
 
 .form-style::after {
@@ -572,33 +591,20 @@ p {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(230, 126, 34, 0.02) 0%, transparent 70%);
-  pointer-events: none;
+  background: radial-gradient(circle, rgba(230,126,34,0.02) 0%, transparent 70%);
   animation: formGlow 8s ease-in-out infinite;
+  pointer-events: none;
 }
 
-.form-style:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 28px 56px -12px rgba(0, 0, 0, 0.25),
-    0 18px 36px -8px rgba(0, 0, 0, 0.18),
-    0 10px 20px -4px rgba(0, 0, 0, 0.12),
-    0 2px 8px rgba(0, 0, 0, 0.1),
-    0 0 36px rgba(230, 126, 34, 0.15),
-    inset 0 2px 1px rgba(255, 255, 255, 0.88),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.05);
-}
-
+/* Título */
 .form-title {
-  color: var(--gray-800);
-  font-size: 1.75rem;
   text-align: center;
+  font-size: 1.75rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--gray-800);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: relative;
-  cursor: default;
-  transition: var(--transition);
 }
 
 .form-title::after {
@@ -611,89 +617,53 @@ p {
   height: 3px;
   background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
   border-radius: 3px;
-  transition: var(--transition);
-  box-shadow: 0 2px 8px rgba(230, 126, 34, 0.3);
+  box-shadow: 0 2px 8px rgba(230,126,34,0.3);
 }
 
-.form-title:hover {
-  transform: translateY(-2px);
-  color: var(--primary);
-}
-
-.form-title:hover::after {
-  width: 80px;
-  box-shadow: 0 4px 12px rgba(230, 126, 34, 0.4);
-}
-
+/* Conteúdo */
 .form-content {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  position: relative;
-  z-index: 2;
 }
 
+/* Campos */
 .form-field {
   width: 100%;
   padding: 1.3rem 1.5rem;
-  border: 2px solid rgba(44, 62, 80, 0.3);
   border-radius: 16px;
-  font-family: var(--font-primary);
   font-size: 1rem;
   font-weight: 500;
-  transition: var(--transition);
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  background: var(--form-input-gradient);
   box-shadow:
-    inset 0 4px 8px rgba(0, 0, 0, 0.15),
-    inset 0 -3px 0 rgba(255, 255, 255, 0.9),
-    0 6px 18px rgba(0, 0, 0, 0.2),
-    0 3px 9px rgba(0, 0, 0, 0.15),
-    0 1px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
+    inset 0 4px 8px rgba(0,0,0,0.15),
+    inset 0 -3px 0 rgba(255,255,255,0.9),
+    0 6px 18px rgba(0,0,0,0.2);
+  border: 2px solid rgba(44,62,80,0.3);
+  transition: var(--transition);
   color: var(--gray-700);
-  touch-action: manipulation;
 }
 
 .form-field::placeholder {
   color: var(--primary);
   font-weight: 500;
-  transition: var(--transition);
 }
 
 .form-field:focus {
   outline: none;
   border-color: var(--accent);
-  background: linear-gradient(145deg, #ffffff 0%, #fefefe 100%);
   box-shadow:
-    inset 0 4px 8px rgba(0, 0, 0, 0.15),
-    inset 0 -3px 0 rgba(255, 255, 255, 0.9),
-    0 0 0 4px rgba(230, 126, 34, 0.25),
-    0 15px 40px rgba(230, 126, 34, 0.4),
-    0 10px 25px rgba(0, 0, 0, 0.25),
-    0 5px 15px rgba(0, 0, 0, 0.2);
+    inset 0 4px 8px rgba(0,0,0,0.15),
+    0 0 0 4px rgba(230,126,34,0.25),
+    0 15px 40px rgba(230,126,34,0.4);
   transform: translateY(-4px);
 }
 
-.form-field:focus::placeholder {
-  color: var(--accent-light);
-  transform: translateY(-2px);
-}
-
-.form-field:hover:not(:focus) {
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 3px 6px rgba(0, 0, 0, 0.12),
-    inset 0 -2px 0 rgba(255, 255, 255, 0.9),
-    0 8px 20px rgba(0, 0, 0, 0.18),
-    0 4px 12px rgba(0, 0, 0, 0.15),
-    0 2px 8px rgba(0, 0, 0, 0.1);
-  border-color: rgba(230, 126, 34, 0.4);
-}
-
+/* Textarea */
 textarea.form-field {
   resize: vertical;
   min-height: 100px;
-  font-family: var(--font-primary);
+  font-family: var(--font-primary); /* ← necessário */
   line-height: 1.6;
 }
 
@@ -701,80 +671,29 @@ textarea.form-field:focus {
   min-height: 120px;
 }
 
+/* Botão */
 .btn-enviar {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary) 100%);
-  color: var(--white);
-  border: none;
   padding: 1.4rem 2rem;
-  font-family: var(--font-primary);
   font-weight: 700;
   font-size: 1.1rem;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--white);
   cursor: pointer;
   transition: var(--transition);
-  border-radius: 16px;
-  box-shadow:
-    0 25px 50px rgba(44, 62, 80, 0.5),
-    0 15px 30px rgba(44, 62, 80, 0.4),
-    0 8px 20px rgba(44, 62, 80, 0.3),
-    0 4px 12px rgba(44, 62, 80, 0.25),
-    0 2px 6px rgba(44, 62, 80, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 25px 50px rgba(44,62,80,0.5);
   text-transform: uppercase;
   letter-spacing: 1px;
   position: relative;
   overflow: hidden;
-  transform-style: preserve-3d;
   margin-top: 0.5rem;
-  touch-action: manipulation;
-}
-
-.btn-enviar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.6s ease;
-}
-
-.btn-enviar::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 0;
-  height: 0;
-  background: radial-gradient(circle, rgba(230, 126, 34, 0.3) 0%, transparent 70%);
-  border-radius: 50%;
-  transition: all 0.4s ease;
-  pointer-events: none;
-}
-
-.btn-enviar:hover::before {
-  left: 100%;
-}
-
-.btn-enviar:hover::after {
-  width: 200px;
-  height: 200px;
 }
 
 .btn-enviar:hover {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, var(--accent) 100%);
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
   transform: translateY(-6px) scale(1.02);
-  box-shadow:
-    0 35px 70px rgba(230, 126, 34, 0.6),
-    0 25px 50px rgba(230, 126, 34, 0.5),
-    0 15px 30px rgba(230, 126, 34, 0.4),
-    0 10px 20px rgba(230, 126, 34, 0.3),
-    0 5px 15px rgba(230, 126, 34, 0.25),
-    0 0 50px rgba(230, 126, 34, 0.3),
-    inset 0 2px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 35px 70px rgba(230,126,34,0.6);
 }
 
 .btn-enviar:active {
@@ -782,32 +701,31 @@ textarea.form-field:focus {
 }
 
 .btn-enviar.sending {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-  cursor: wait;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
   animation: pulse 2s ease-in-out infinite;
+  cursor: wait;
 }
 
 .btn-enviar.success {
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-  box-shadow: 0 12px 24px rgba(46, 204, 113, 0.3), 0 6px 16px rgba(46, 204, 113, 0.2), 0 0 20px rgba(46, 204, 113, 0.15);
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
 }
 
 .btn-enviar.error {
-  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-  box-shadow: 0 12px 24px rgba(231, 76, 60, 0.3), 0 6px 16px rgba(231, 76, 60, 0.2), 0 0 20px rgba(231, 76, 60, 0.15);
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
 
+/* Feedback */
 .form-feedback {
   font-size: 1rem;
   text-align: center;
   margin-top: 1.5rem;
   font-weight: 600;
-  min-height: 24px;
   padding: 1rem 1.5rem;
   border-radius: 12px;
-  transition: var(--transition);
   opacity: 0;
   transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  min-height: 24px;
 }
 
 .form-feedback.show {
@@ -817,16 +735,20 @@ textarea.form-field:focus {
 
 .form-feedback.success {
   color: #1e7e34;
-  background: linear-gradient(145deg, rgba(46, 204, 113, 0.1) 0%, rgba(46, 204, 113, 0.05) 100%);
+  background: rgba(46, 204, 113, 0.1);
   border: 1px solid rgba(46, 204, 113, 0.3);
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .form-feedback.error {
   color: #721c24;
-  background: linear-gradient(145deg, rgba(231, 76, 60, 0.1) 0%, rgba(231, 76, 60, 0.05) 100%);
+  background: rgba(231, 76, 60, 0.1);
   border: 1px solid rgba(231, 76, 60, 0.3);
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Animação para desaparecer suavemente */
+.fade-out {
+  opacity: 0 !important;
+  transition: opacity 0.6s ease;
 }
 
 /* ===== SOBRE SECTION ===== */
@@ -1805,28 +1727,6 @@ textarea.form-field:focus {
     display: none; /* removido pois agora é imagem no fundo */
   }
 }
-
-  /* Forms */
-  .form-style {
-    padding: 2rem;
-  }
-
-  .form-container {
-    padding: 0.5rem;
-  }
-
-  .form-title {
-    font-size: 1.5rem;
-  }
-
-  .form-field {
-    padding: 1.2rem;
-  }
-
-  .btn-enviar {
-    padding: 1.2rem 1.5rem;
-    font-size: 1rem;
-  }
 
 /* ===== IMPLANTAÇÃO - MOBILE ===== */
 @media (max-width: 768px) {
