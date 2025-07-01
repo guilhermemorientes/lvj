@@ -241,7 +241,7 @@ function initZoomMobile() {
   }, { passive: false })
 }
 
-// ===== GALERIA SLIDER OTIMIZADA ===== //
+// ===== GALERIA SLIDER SIMPLIFICADA ===== //
 function initGallerySlider() {
   const slides = document.querySelectorAll(".slide-card")
   const prevBtn = document.getElementById("prev-btn")
@@ -257,13 +257,9 @@ function initGallerySlider() {
     isTransitioning = true
 
     slides.forEach((slide, i) => {
-      slide.classList.remove("active", "prev", "next")
+      slide.classList.remove("active")
       if (i === index) {
         slide.classList.add("active")
-      } else if (i === (index + 1) % slides.length) {
-        slide.classList.add("next")
-      } else if (i === (index - 1 + slides.length) % slides.length) {
-        slide.classList.add("prev")
       }
     })
 
@@ -284,68 +280,15 @@ function initGallerySlider() {
     showSlide(currentSlide)
   }
 
-  // Event listeners otimizados
   nextBtn.addEventListener("click", (e) => {
     e.preventDefault()
-    e.stopPropagation()
     nextSlide()
   })
 
   prevBtn.addEventListener("click", (e) => {
     e.preventDefault()
-    e.stopPropagation()
     prevSlide()
   })
-
-  // Touch events para mobile
-  if (window.innerWidth <= 768) {
-    let startX = 0
-    let endX = 0
-
-    const slideContainer = document.getElementById("slide-container")
-    if (slideContainer) {
-      slideContainer.addEventListener(
-        "touchstart",
-        (e) => {
-          startX = e.touches[0].clientX
-        },
-        { passive: true },
-      )
-
-      slideContainer.addEventListener(
-        "touchend",
-        (e) => {
-          endX = e.changedTouches[0].clientX
-          const diff = startX - endX
-
-          if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-              nextSlide()
-            } else {
-              prevSlide()
-            }
-          }
-        },
-        { passive: true },
-      )
-    }
-  }
-
-  // Auto-play pausado no mobile
-  if (window.innerWidth > 768) {
-    let autoPlayInterval = setInterval(nextSlide, 5000)
-
-    const sliderContainer = document.querySelector(".slider-container")
-    if (sliderContainer) {
-      sliderContainer.addEventListener("mouseenter", () => {
-        clearInterval(autoPlayInterval)
-      })
-
-      sliderContainer.addEventListener("mouseleave", () => {
-        autoPlayInterval = setInterval(nextSlide, 5000)
-      })
-    }
-  }
 
   showSlide(currentSlide)
 }
