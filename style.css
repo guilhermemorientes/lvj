@@ -1646,7 +1646,7 @@ textarea.form-field:focus {
 
 /* ===== MEDIA QUERIES RESPONSIVAS ===== */
 @media (max-width: 768px) {
-  /* Navigation */
+  /* ===== Navegação ===== */
   .menu-toggle {
     display: block;
   }
@@ -1659,8 +1659,7 @@ textarea.form-field:focus {
     display: flex;
   }
 
-/* ===== HERO MOBILE RESPONSIVO ===== */
-@media (max-width: 768px) {
+  /* ===== Hero ===== */
   .hero {
     background-position: center top;
     background-size: cover;
@@ -1670,15 +1669,10 @@ textarea.form-field:focus {
     position: relative;
   }
 
-  .hero-content {
-    display: none;
-  }
-
-  .video-container {
-    display: none;
-  }
-
-  .desktop-hero {
+  .hero-content,
+  .video-container,
+  .desktop-hero,
+  .hero-mobile-video {
     display: none;
   }
 
@@ -1725,13 +1719,7 @@ textarea.form-field:focus {
     font-weight: bold;
   }
 
-  .hero-mobile-video {
-    display: none; /* removido pois agora é imagem no fundo */
-  }
-}
-
-/* ===== IMPLANTAÇÃO - MOBILE ===== */
-@media (max-width: 768px) {
+  /* ===== Implantação ===== */
   .implantacao-content {
     display: flex;
     flex-direction: column;
@@ -1742,12 +1730,10 @@ textarea.form-field:focus {
     width: 100%;
   }
 
-  /* Oculta estrutura desktop */
   .implantacao-expandida {
     display: none;
   }
 
-  /* Wrapper do zoom (MOBILE) */
   .zoom-wrapper {
     position: relative;
     overflow: hidden;
@@ -1757,7 +1743,6 @@ textarea.form-field:focus {
     height: auto;
   }
 
-  /* Imagem mobile com zoom isolado */
   #implantacao-img-mobile {
     width: 100%;
     height: auto;
@@ -1773,7 +1758,6 @@ textarea.form-field:focus {
     cursor: grab;
   }
 
-  /* Botões de zoom */
   #zoom-toggle,
   #zoom-close {
     position: absolute;
@@ -1806,7 +1790,6 @@ textarea.form-field:focus {
     display: none;
   }
 
-  /* Título visível no fundo azul */
   .implantacao-titulo {
     color: var(--white);
     text-align: center;
@@ -1814,15 +1797,14 @@ textarea.form-field:focus {
     font-size: 1.4rem;
     font-weight: 700;
   }
-}
 
-/* Destaque */
+  /* ===== Destaque ===== */
   .destaque {
     background-attachment: scroll;
     min-height: 80vh;
   }
 
-  /* Galeria */
+  /* ===== Galeria ===== */
   .galeria-slider {
     height: 350px;
   }
@@ -1856,7 +1838,7 @@ textarea.form-field:focus {
     right: 2%;
   }
 
-  /* Plantas */
+  /* ===== Plantas ===== */
   .plantas-cards {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
@@ -1875,22 +1857,22 @@ textarea.form-field:focus {
     padding: 0 var(--space-md);
   }
 
-.plantas-cut {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: var(--space-md);
-  background-color: var(--gray-100);
-}
+  .plantas-cut {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-md);
+    background-color: var(--gray-100);
+  }
 
-.plantas-cut img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-  border-radius: 12px;
-  box-shadow: var(--shadow-lg);
-}
+  .plantas-cut img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+  }
 
   .slider-buttons {
     flex-direction: column;
@@ -1905,6 +1887,7 @@ textarea.form-field:focus {
     text-align: center;
   }
 
+  /* ===== Rodapé ===== */
   .footer-content {
     flex-direction: column;
     gap: var(--space-md);
@@ -1915,8 +1898,7 @@ textarea.form-field:focus {
     justify-content: center;
   }
 
-  /* ===== CONTATO - MOBILE ===== */
-@media (max-width: 768px) {
+  /* ===== Contato ===== */
   .contato {
     padding: var(--space-xl) 0;
     background: var(--white);
@@ -1955,9 +1937,8 @@ textarea.form-field:focus {
     border-radius: 12px;
     margin-top: var(--space-md);
   }
-}
 
-  /* Otimizações específicas mobile */
+  /* ===== Otimizações Mobile ===== */
   * {
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
@@ -1969,7 +1950,7 @@ textarea.form-field:focus {
   }
 }
 
-/* ===== UTILITÁRIOS ===== */
+/* ===== UTILITÁRIOS GERAIS ===== */
 .visually-hidden {
   position: absolute;
   width: 1px;
