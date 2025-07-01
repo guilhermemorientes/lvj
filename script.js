@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   preloadCriticalImages()
   initLazyLoading()
   initFadeInImages()
+  initZoomMobile() // ← ADICIONADO
 
   console.log("Las Villas Serra do Japi - Site carregado com sucesso!")
 })
@@ -186,6 +187,58 @@ function initScrollAnimations() {
   document.querySelectorAll(".fade-in-up").forEach((el) => {
     observer.observe(el)
   })
+}
+
+// ===== ZOOM MOBILE - IMPLANTAÇÃO =====
+function initZoomMobile() {
+  const img = document.getElementById("implantacao-img-mobile")
+  const zoomWrapper = document.querySelector(".zoom-wrapper")
+  const btnOpen = document.getElementById("zoom-toggle")
+  const btnClose = document.getElementById("zoom-close")
+
+  if (!img || !zoomWrapper || !btnOpen || !btnClose) return
+
+  let isZoomed = false
+  let startX = 0, startY = 0, scrollLeft = 0, scrollTop = 0
+
+  btnOpen.addEventListener("click", (e) => {
+    e.preventDefault()
+    isZoomed = true
+    img.classList.add("zoomed")
+    zoomWrapper.style.overflow = "scroll"
+    btnOpen.style.display = "none"
+    btnClose.style.display = "flex"
+  })
+
+  btnClose.addEventListener("click", (e) => {
+    e.preventDefault()
+    isZoomed = false
+    img.classList.remove("zoomed")
+    zoomWrapper.style.overflow = "hidden"
+    zoomWrapper.scrollLeft = 0
+    zoomWrapper.scrollTop = 0
+    btnOpen.style.display = "flex"
+    btnClose.style.display = "none"
+  })
+
+  img.addEventListener("touchstart", (e) => {
+    if (!isZoomed) return
+    startX = e.touches[0].pageX - zoomWrapper.offsetLeft
+    startY = e.touches[0].pageY - zoomWrapper.offsetTop
+    scrollLeft = zoomWrapper.scrollLeft
+    scrollTop = zoomWrapper.scrollTop
+  })
+
+  img.addEventListener("touchmove", (e) => {
+    if (!isZoomed) return
+    e.preventDefault()
+    const x = e.touches[0].pageX - zoomWrapper.offsetLeft
+    const y = e.touches[0].pageY - zoomWrapper.offsetTop
+    const walkX = startX - x
+    const walkY = startY - y
+    zoomWrapper.scrollLeft = scrollLeft + walkX
+    zoomWrapper.scrollTop = scrollTop + walkY
+  }, { passive: false })
 }
 
 // ===== GALERIA SLIDER OTIMIZADA ===== //
@@ -546,12 +599,9 @@ function handleForm(formId, feedbackId) {
       form.reset()
 
       // Disparar conversão do Google Ads
-      window.gtag_report_conversion =
-        window.gtag_report_conversion ||
-        (() => {
-          console.log("gtag_report_conversion function is not declared.")
-        })
-      window.gtag_report_conversion()
+      if (typeof gtag_report_conversion === "function") {
+        gtag_report_conversion()
+      }
 
       console.log("✅ Formulário processado com sucesso!")
     }
