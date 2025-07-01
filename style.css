@@ -1913,6 +1913,45 @@ textarea.form-field:focus {
     justify-content: center;
   }
 
+  /* ===== CONTATO - MOBILE ===== */
+@media (max-width: 768px) {
+  .contato {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .contato .container {
+    max-width: 100%;
+    padding: 0 var(--space-md);
+  }
+
+  #contato .form-container {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--space-md);
+    box-sizing: border-box;
+  }
+
+  .form-style {
+    padding: var(--space-lg);
+    border-radius: 16px;
+    box-shadow: var(--shadow-2xl);
+  }
+
+  .form-field {
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .btn-enviar {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    margin-top: var(--space-md);
+  }
+}
+
   /* Otimizações específicas mobile */
   * {
     -webkit-transform: translateZ(0);
