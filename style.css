@@ -1607,9 +1607,10 @@ textarea.form-field:focus {
   margin-bottom: 1.5rem;
 }
 
-/* ===== FOOTER (DESKTOP) ===== */
+/* ===== FOOTER DESKTOP ===== */
 .footer {
   background: var(--gray-900);
+  color: var(--white);
   padding: var(--space-xl) 0;
 }
 
@@ -1622,25 +1623,28 @@ textarea.form-field:focus {
 
 .footer-center {
   text-align: center;
-}
-
-.footer-copy {
-  color: #cfd8e6; /* azul claro igual ao ícone */
+  color: #a0b8d8; /* azul claro */
   font-size: 0.875rem;
-  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .footer-right {
   text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .social-icons {
-  display: inline-flex;
+  display: flex;
   gap: var(--space-md);
 }
 
 .social-icons a {
-  color: var(--gray-400);
+  color: #a0b8d8;
   transition: var(--transition);
   width: 40px;
   height: 40px;
@@ -1949,42 +1953,38 @@ textarea.form-field:focus {
   }
 }
 
-/* ===== Rodapé - Responsivo ===== */
+/* ===== FOOTER MOBILE ===== */
 @media (max-width: 768px) {
   .footer-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
     padding: var(--space-md) var(--space-lg);
     text-align: center;
-    gap: var(--space-sm);
   }
 
-  .footer-left {
+  .footer-left,
+  .footer-right {
     display: none;
   }
 
   .footer-center {
-    width: 100%;
     order: 1;
-  }
-
-  .footer-copy {
     color: #a0b8d8;
     font-size: 0.875rem;
-    margin: 0;
-  }
-
-  .footer-right {
     width: 100%;
-    order: 2;
-    margin-top: var(--space-sm);
+    text-align: center;
   }
 
   .social-icons {
+    order: 2;
     display: flex;
     justify-content: center;
     gap: var(--space-md);
+    width: 100%;
+    margin-top: var(--space-sm);
   }
 }
 
