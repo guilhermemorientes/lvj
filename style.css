@@ -1916,23 +1916,26 @@ textarea.form-field:focus {
   /* ===== CONTATO - MOBILE ===== */
 @media (max-width: 768px) {
   .contato {
-    padding: var(--space-xl) var(--space-md);
+    padding: var(--space-xl) 0;
+    background: var(--white);
   }
 
   .contato .container {
-    max-width: 100%;
-    padding: 0 var(--space-md);
+    max-width: 100vw;
+    padding: 0;
+    margin: 0;
   }
 
   #contato .form-container {
-    width: 100%;
-    max-width: 100%;
-    padding: var(--space-md);
+    width: 100vw;
+    max-width: 100vw;
+    padding: var(--space-lg);
     box-sizing: border-box;
   }
 
   .form-style {
-    padding: var(--space-lg);
+    width: 100%;
+    padding: var(--space-xl);
     border-radius: 16px;
     box-shadow: var(--shadow-2xl);
   }
