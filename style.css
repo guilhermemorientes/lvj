@@ -1620,10 +1620,6 @@ textarea.form-field:focus {
   padding: 0 var(--space-xl);
 }
 
-.footer-left {
-  /* vazio */
-}
-
 .footer-center {
   text-align: center;
 }
