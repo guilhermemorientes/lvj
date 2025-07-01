@@ -529,6 +529,39 @@ p {
   --form-glow: 0 0 36px rgba(230, 126, 34, 0.15);
 }
 
+/* ===== HERO FORM ===== */
+.hero-form {
+  z-index: 2;
+  width: 100%;
+  max-width: 100vw;
+  padding: var(--space-lg);
+  box-sizing: border-box;
+}
+
+/* ===== CONTAINER ===== */
+.form-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  filter: drop-shadow(0 20px 36px rgba(0, 0, 0, 0.14));
+}
+
+/* ===== ESTILO DO FORMULÁRIO ===== */
+.form-style {
+  background: linear-gradient(145deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
+  padding: var(--form-padding);
+  border-radius: var(--form-radius);
+  box-shadow: var(--form-shadow), inset 0 1px 2px rgba(255,255,255,0.8), inset 0 -1px 1px rgba(0,0,0,0.05);
+  border: 1px solid rgba(226,232,240,0.65);
+  backdrop-filter: blur(18px);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+  font-family: var(--font-primary), sans-serif;
+}
+
 /* ===== ANIMAÇÕES ===== */
 @keyframes formGlow {
   0%, 100% {
@@ -550,30 +583,7 @@ p {
   }
 }
 
-/* ===== FORMULÁRIO ===== */
-.form-container {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 3rem;
-  position: relative;
-  filter: drop-shadow(0 20px 36px rgba(0, 0, 0, 0.14));
-}
-
-/* Estrutura */
-.form-style {
-  background: linear-gradient(145deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
-  padding: var(--form-padding);
-  border-radius: var(--form-radius);
-  box-shadow: var(--form-shadow), inset 0 1px 2px rgba(255,255,255,0.8), inset 0 -1px 1px rgba(0,0,0,0.05);
-  border: 1px solid rgba(226,232,240,0.65);
-  backdrop-filter: blur(18px);
-  position: relative;
-  overflow: hidden;
-  transition: var(--transition);
-  font-family: var(--font-primary), sans-serif;
-}
-
+/* ===== DECORAÇÕES DO FORM ===== */
 .form-style::before {
   content: "";
   position: absolute;
@@ -598,7 +608,7 @@ p {
   pointer-events: none;
 }
 
-/* Título */
+/* ===== TÍTULO ===== */
 .form-title {
   text-align: center;
   font-size: 1.75rem;
@@ -622,7 +632,7 @@ p {
   box-shadow: 0 2px 8px rgba(230,126,34,0.3);
 }
 
-/* Conteúdo e Campos */
+/* ===== CAMPOS ===== */
 .form-content {
   display: flex;
   flex-direction: column;
@@ -661,7 +671,7 @@ p {
     0 15px 40px rgba(230,126,34,0.4);
 }
 
-/* Textarea */
+/* ===== TEXTAREA ===== */
 textarea.form-field {
   resize: vertical;
   min-height: 100px;
@@ -672,7 +682,7 @@ textarea.form-field:focus {
   min-height: 120px;
 }
 
-/* Botão */
+/* ===== BOTÃO ENVIAR ===== */
 .btn-enviar {
   margin-top: 0.5rem;
   padding: 1.4rem 2rem;
@@ -716,7 +726,7 @@ textarea.form-field:focus {
   background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
 
-/* Feedback */
+/* ===== FEEDBACK ===== */
 .form-feedback {
   margin-top: 1.5rem;
   padding: 1rem 1.5rem;
@@ -747,7 +757,7 @@ textarea.form-field:focus {
   border: 1px solid rgba(231, 76, 60, 0.3);
 }
 
-/* Suavizar ocultamento */
+/* ===== OCULTAMENTO ===== */
 .fade-out {
   opacity: 0 !important;
   transition: opacity 0.6s ease;
@@ -1017,8 +1027,8 @@ textarea.form-field:focus {
   }
 
   .implantacao-expandida {
-    width: 150%;
-    transform: translateX(30%);
+    width: 100%;
+    transform: translateX(65%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1037,7 +1047,7 @@ textarea.form-field:focus {
   }
 
   #implantacao-img-desktop:hover {
-    transform: scale(1.40) translateY(-8px);
+    transform: scale(1.20) translateY(-8px);
   }
 
   /* Esconde botões e wrapper de zoom no desktop */
@@ -1899,7 +1909,8 @@ textarea.form-field:focus {
     justify-content: center;
   }
 
-  /* ===== Contato ===== */
+/* ===== CONTATO - RESPONSIVO ===== */
+@media (max-width: 768px) {
   .contato {
     padding: var(--space-xl) 0;
     background: var(--white);
@@ -1907,13 +1918,14 @@ textarea.form-field:focus {
 
   .contato .container {
     max-width: 100vw;
-    padding: 0;
+    width: 100%;
     margin: 0;
+    padding: 0;
   }
 
   #contato .form-container {
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%;
+    max-width: 100%;
     padding: var(--space-lg);
     box-sizing: border-box;
   }
@@ -1921,14 +1933,17 @@ textarea.form-field:focus {
   .form-style {
     width: 100%;
     padding: var(--space-xl);
-    border-radius: 16px;
+    border-radius: var(--form-radius);
     box-shadow: var(--shadow-2xl);
+    background: var(--white);
   }
 
   .form-field {
+    width: 100%;
     font-size: 1rem;
     padding: 1rem;
     border-radius: 12px;
+    box-sizing: border-box;
   }
 
   .btn-enviar {
@@ -1937,7 +1952,9 @@ textarea.form-field:focus {
     font-size: 1rem;
     border-radius: 12px;
     margin-top: var(--space-md);
+    box-sizing: border-box;
   }
+}
 
   /* ===== Otimizações Mobile ===== */
   * {
