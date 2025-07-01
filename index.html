@@ -53,32 +53,26 @@
 
       // Google Ads
       gtag('config', 'AW-17285585132');
+
+      // Função de conversão
+      window.gtag_report_conversion = function (url) {
+        const callback = function () {
+          if (typeof url !== 'undefined') {
+            window.location = url;
+          }
+        };
+
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17285585132/eI-5CIuj7OYaEOyxtLJA',
+          'value': 1.0,
+          'currency': 'BRL',
+          'event_callback': callback
+        });
+
+        return false;
+      };
     };
   });
-</script>
-
-<!-- Conversão Google Ads: botão enviar formulário -->
-<script>
-  function gtag_report_conversion(url) {
-    if (typeof gtag !== "function") {
-      console.warn("gtag ainda não carregado. Ignorando conversão.");
-      return false;
-    }
-
-    var callback = function () {
-      if (typeof url !== "undefined") {
-        window.location = url;
-      }
-    };
-
-    gtag('event', 'conversion', {
-      'send_to': 'AW-17285585132/zGpYCJ7XtOYaEOyxtLJA',
-      'value': 1.0,
-      'currency': 'BRL',
-      'event_callback': callback
-    });
-    return false;
-  }
 </script>
 </head>
 
@@ -282,16 +276,16 @@
     </div>
 
     <!-- VERSÃO MOBILE: imagem com zoom -->
-    <div class="zoom-wrapper">
-      <img
-        src="img/implantacao-mobile.webp"
-        alt="Planta do condomínio Las Villas Serra do Japi"
-        class="implantacao-img-mobile"
-        id="implantacao-img-mobile"
-      >
-      <button class="zoom-icon" id="zoom-toggle">+</button>
-      <button class="close-zoom" id="zoom-close">✕</button>
-    </div>
+<div class="zoom-wrapper">
+  <img
+    src="img/implantacao-mobile.webp"
+    alt="Planta do condomínio Las Villas Serra do Japi"
+    class="implantacao-img-mobile"
+    id="implantacao-img-mobile"
+  >
+  <button id="zoom-toggle" class="zoom-btn" aria-label="Ampliar">+</button>
+  <button id="zoom-close" class="zoom-btn" aria-label="Fechar Zoom">✕</button>
+</div>
 
   </div>
 </div>
