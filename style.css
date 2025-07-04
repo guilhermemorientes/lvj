@@ -1113,6 +1113,46 @@ textarea.form-field:focus {
   margin-bottom: var(--space-md);
 }
 
+/* ===== PLAYER YOUTUBE PLACEHOLDER ===== */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== BOTÃO COM ÍCONE DE IMAGEM RESPONSIVO ===== */
+.youtube-play-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+}
+
+.youtube-play-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.youtube-icon {
+  width: clamp(120px, 18vw, 180px);
+  height: auto;
+  transition: var(--transition);
+  pointer-events: none;
+}
+
 /* ===== TEXTO DA SEÇÃO ===== */
 .localizacao-text {
   font-size: 1rem;
@@ -1839,11 +1879,18 @@ textarea.form-field:focus {
     font-weight: 700;
   }
 
-  /* ===== Destaque ===== */
+  /* ===== Localização ===== */
   .destaque {
     background-attachment: scroll;
     min-height: 80vh;
   }
+
+.youtube-icon {
+  width: clamp(56px, 18vw, 120px); /* menor mínimo, menor máximo */
+  height: auto;
+  transition: var(--transition);
+  pointer-events: none;
+}
 
   /* ===== Galeria ===== */
   .galeria-slider {
