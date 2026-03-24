@@ -34,45 +34,19 @@
   <!-- Estilos principais (pode aplicar preload opcional futuramente se quiser) -->
   <link rel="stylesheet" href="style.css">
 
-<!-- Google Analytics + Google Ads -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XPSFJFZ2KP"></script>
 <script>
-  window.addEventListener("load", function () {
-    const gtagScript = document.createElement("script");
-    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-XPSFJFZ2KP";
-    gtagScript.async = true;
-    document.head.appendChild(gtagScript);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
 
-    gtagScript.onload = function () {
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      window.gtag = gtag;
+  gtag('js', new Date());
 
-      // Google Analytics
-      gtag('js', new Date());
-      gtag('config', 'G-XPSFJFZ2KP');
+  // Google Analytics
+  gtag('config', 'G-XPSFJFZ2KP');
 
-      // Google Ads
-      gtag('config', 'AW-17285585132');
-
-      // Função de conversão
-      window.gtag_report_conversion = function (url) {
-        const callback = function () {
-          if (typeof url !== 'undefined') {
-            window.location = url;
-          }
-        };
-
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17285585132/eI-5CIuj7OYaEOyxtLJA',
-          'value': 1.0,
-          'currency': 'BRL',
-          'event_callback': callback
-        });
-
-        return false;
-      };
-    };
-  });
+  // Google Ads
+  gtag('config', 'AW-18023148058');
 </script>
 </head>
 
