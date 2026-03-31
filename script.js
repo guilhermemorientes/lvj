@@ -451,85 +451,66 @@ function handleForm(formId, feedbackId) {
       "https://script.google.com/macros/s/AKfycbzPrO5QLR5ynXLw6eoBUOOax1ibQbGz6ang8yPvuSiOi-DY1W7IyOEHmPb8WHpMekSB/exec"
 
     try {
-      // TENTATIVA 1: Envio com JSON (método preferido)
+      // Método mais confiável para Google Apps Script: FormData com redirect=follow
+      const formDataToSend = new FormData()
+      formDataToSend.append("nome", jsonData.nome)
+      formDataToSend.append("email", jsonData.email)
+      formDataToSend.append("telefone", jsonData.telefone)
+      formDataToSend.append("informacoes", jsonData.informacoes || "")
+
+      console.log("Enviando via FormData...")
+
       const response = await fetch(scriptUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jsonData),
+        body: formDataToSend,
+        redirect: "follow"
       })
 
-      console.log("Resposta recebida:", response.status, response.statusText)
+      console.log("Resposta recebida:", response.status, response.type)
 
-      if (response.ok) {
+      // Para Google Apps Script, resposta "opaque" ou status 200-299 indica sucesso
+      if (response.ok || response.type === "opaque" || response.status === 0) {
         try {
           const result = await response.json()
-          console.log("Resultado:", result)
-
+          console.log("Resultado JSON:", result)
           if (result.success) {
             showSuccess()
           } else {
-            throw new Error(result.error || "Erro desconhecido")
+            throw new Error(result.error || "Erro retornado pelo servidor")
           }
         } catch (jsonError) {
-          console.log("Erro ao ler JSON, mas resposta OK - assumindo sucesso")
+          // Se não conseguiu ler JSON mas request foi feito, assumir sucesso
+          console.log("Request enviado (não foi possível ler resposta JSON)")
           showSuccess()
         }
       } else {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
     } catch (error) {
-      console.log("Erro na primeira tentativa:", error.message)
+      console.log("Erro no envio:", error.message)
 
-      // TENTATIVA 2: Envio com FormData (fallback)
+      // Tentar via no-cors como fallback (sempre retorna opaque, mas envia os dados)
       try {
-        console.log("Tentando com FormData...")
+        console.log("Tentando envio no-cors...")
+        
+        const formDataFallback = new FormData()
+        formDataFallback.append("nome", jsonData.nome)
+        formDataFallback.append("email", jsonData.email)
+        formDataFallback.append("telefone", jsonData.telefone)
+        formDataFallback.append("informacoes", jsonData.informacoes || "")
 
-        const formDataToSend = new FormData()
-        formDataToSend.append("nome", jsonData.nome)
-        formDataToSend.append("email", jsonData.email)
-        formDataToSend.append("telefone", jsonData.telefone)
-        formDataToSend.append("informacoes", jsonData.informacoes)
-
-        const response2 = await fetch(scriptUrl, {
+        await fetch(scriptUrl, {
           method: "POST",
-          body: formDataToSend,
+          body: formDataFallback,
+          mode: "no-cors"
         })
 
-        console.log("Segunda tentativa - Resposta:", response2.status)
-
-        if (response2.ok) {
-          try {
-            const result = await response2.json()
-            if (result.success) {
-              showSuccess()
-            } else {
-              throw new Error(result.error || "Erro na segunda tentativa")
-            }
-          } catch (jsonError) {
-            console.log("FormData enviado com sucesso (erro de CORS na leitura)")
-            showSuccess()
-          }
-        } else {
-          throw new Error(`Segunda tentativa falhou: ${response2.status}`)
-        }
+        // No modo no-cors não temos como verificar resposta, mas os dados são enviados
+        console.log("Envio no-cors concluído")
+        showSuccess()
       } catch (error2) {
-        console.log("Segunda tentativa também falhou:", error2.message)
-
-        // TENTATIVA 3: Assumir sucesso se for erro de CORS
-        if (
-          error.message.includes("CORS") ||
-          error.message.includes("opaque") ||
-          error.message.includes("Failed to fetch") ||
-          error2.message.includes("CORS") ||
-          error2.message.includes("Failed to fetch")
-        ) {
-          console.log("Erro de CORS detectado - assumindo envio bem-sucedido")
-          showSuccess()
-        } else {
-          showError()
-        }
+        console.log("Fallback também falhou:", error2.message)
+        showError()
       }
     }
 
