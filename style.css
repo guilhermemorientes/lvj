@@ -1663,13 +1663,13 @@ textarea.form-field:focus {
 .footer {
   background: var(--gray-900);
   color: var(--white);
-  padding: var(--space-xl) 0 var(--space-md); /* menos padding inferior */
+  padding: var(--space-xl) 0 var(--space-md);
 }
 
 .footer-container {
   display: grid;
   grid-template-columns: 15% 70% 15%;
-  align-items: end; /* força todos os 3 grids pro fundo */
+  align-items: end;
   max-width: var(--container-max, 1200px);
   margin: 0 auto;
   padding: 0 var(--space-xl);
@@ -1689,10 +1689,14 @@ textarea.form-field:focus {
   align-items: flex-end;
   justify-content: center;
   text-align: center;
-  color: #a0b8d8;
-  font-size: 0.875rem;
   margin: 0;
   padding: 0;
+}
+
+.footer-copy {
+  color: var(--white);
+  font-size: 0.875rem;
+  margin: 0;
 }
 
 /* Grid 3 – Ícones alinhados à direita e ao fundo */
@@ -1709,8 +1713,8 @@ textarea.form-field:focus {
 }
 
 .social-icons a {
-  color: #a0b8d8;
-  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.15);
   box-shadow: var(--shadow-md);
   display: flex;
   align-items: center;
@@ -1721,11 +1725,28 @@ textarea.form-field:focus {
   transition: var(--transition);
 }
 
+.social-icons a svg,
+.social-icons a svg path,
+.social-icons a svg rect,
+.social-icons a svg line,
+.social-icons a svg circle {
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
 .social-icons a:hover {
   color: var(--accent);
-  background: rgba(230, 126, 34, 0.2);
+  background: rgba(230, 126, 34, 0.3);
   box-shadow: var(--shadow-lg);
   transform: translateY(-2px) scale(1.1);
+}
+
+.social-icons a:hover svg,
+.social-icons a:hover svg path,
+.social-icons a:hover svg rect,
+.social-icons a:hover svg line,
+.social-icons a:hover svg circle {
+  stroke: var(--accent) !important;
 }
 
 /* ===== MEDIA QUERIES RESPONSIVAS ===== */
