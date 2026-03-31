@@ -537,16 +537,16 @@ function handleForm(formId, feedbackId) {
       submitBtn.classList.remove("sending")
       submitBtn.classList.add("success")
       submitBtn.textContent = "ENVIADO COM SUCESSO!"
-      feedback.textContent = "Mensagem enviada com sucesso! Entraremos em contato."
+      feedback.textContent = "Redirecionando..."
       feedback.classList.add("success", "show")
       form.reset()
 
-      // Disparar conversão do Google Ads
-      if (typeof gtag_report_conversion === "function") {
-        gtag_report_conversion()
-      }
+      console.log("✅ Formulário processado com sucesso! Redirecionando para página de sucesso...")
 
-      console.log("✅ Formulário processado com sucesso!")
+      // Redireciona para página de sucesso após 1 segundo
+      setTimeout(() => {
+        window.location.href = "sucesso.html"
+      }, 1000)
     }
 
     function showError() {
@@ -559,18 +559,21 @@ function handleForm(formId, feedbackId) {
       console.log("❌ Erro real no envio do formulário")
     }
 
-    // Reset do botão após 5 segundos
-    setTimeout(() => {
-      feedback.classList.add("fade-out")
+    // O código de reset do botão foi removido pois agora redirecionamos para a página de sucesso
+    // Em caso de erro, reset após 5 segundos
+    if (!submitBtn.classList.contains("success")) {
       setTimeout(() => {
-        submitBtn.classList.remove("success", "error")
-        submitBtn.textContent = "ENVIAR MENSAGEM"
-        submitBtn.disabled = false
-        submitBtn.dataset.sending = "false"
-        feedback.classList.remove("show", "success", "error", "fade-out")
-        feedback.textContent = ""
-      }, 600)
-    }, 5000)
+        feedback.classList.add("fade-out")
+        setTimeout(() => {
+          submitBtn.classList.remove("success", "error")
+          submitBtn.textContent = "ENVIAR MENSAGEM"
+          submitBtn.disabled = false
+          submitBtn.dataset.sending = "false"
+          feedback.classList.remove("show", "success", "error", "fade-out")
+          feedback.textContent = ""
+        }, 600)
+      }, 5000)
+    }
   })
 }
 
