@@ -114,7 +114,6 @@ img {
 
   /* Previne scroll involuntário */
   body {
-    position: relative;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
   }
@@ -2094,7 +2093,7 @@ textarea.form-field:focus {
 
 /* ===== WHATSAPP FLOATING BUTTON ===== */
 .whatsapp-float {
-  position: fixed;
+  position: fixed !important;
   bottom: 24px;
   right: 24px;
   width: 60px;
@@ -2105,22 +2104,28 @@ textarea.form-field:focus {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4), 0 2px 6px rgba(0, 0, 0, 0.15);
-  z-index: 9999;
-  transition: var(--transition);
+  z-index: 999999;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  /* Garante que funcione em mobile */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .whatsapp-float:hover {
-  transform: scale(1.1) translateY(-4px);
+  transform: scale(1.1) translateY(-4px) translateZ(0);
   box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5), 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .whatsapp-float:active {
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(0);
 }
 
 .whatsapp-float svg {
-  transition: var(--transition);
+  transition: transform 0.3s ease;
 }
 
 .whatsapp-float:hover svg {
@@ -2130,10 +2135,13 @@ textarea.form-field:focus {
 /* ===== WHATSAPP MOBILE ===== */
 @media (max-width: 768px) {
   .whatsapp-float {
-    bottom: 16px;
-    right: 16px;
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
     width: 56px;
     height: 56px;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 
   .whatsapp-float svg {
