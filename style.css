@@ -2079,10 +2079,7 @@ textarea.form-field:focus {
   }
 
   /* ===== Otimizações Mobile ===== */
-  * {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
+  /* Removido transform global que quebrava position: fixed */
 
   .fade-in-up {
     opacity: 1;
